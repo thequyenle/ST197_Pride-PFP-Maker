@@ -1,3 +1,0 @@
-com.pony.avatar.ocmaker.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme
