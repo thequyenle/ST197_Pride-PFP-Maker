@@ -1,0 +1,2 @@
+com.pony.avatar.ocmaker.test:style/WhiteBackgroundTheme = 0x7f010001
+com.pony.avatar.ocmaker.test:style/WhiteBackgroundDialogTheme = 0x7f010000

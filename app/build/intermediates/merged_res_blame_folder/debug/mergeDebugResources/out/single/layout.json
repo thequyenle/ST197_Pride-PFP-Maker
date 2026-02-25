@@ -1,0 +1,318 @@
+[
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\dialog_loading.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\dialog_loading.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/item_background_image.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/item_background_image.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/layout_bottom_view.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/layout_bottom_view.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/activity_random_character.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/activity_random_character.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\dialog_color_picker.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\dialog_color_picker.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_medium_btn_bottom_2_shimmer.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_medium_btn_bottom_2_shimmer.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\dialog_rate.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\dialog_rate.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_medium_btn_bottom.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_medium_btn_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_background_image.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_background_image.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/item_color.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/item_color.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/item_intro.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/item_intro.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_big_btn_bottom_media_full_shimmer.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_big_btn_bottom_media_full_shimmer.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/activity_permission.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/activity_permission.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/activity_settings.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_medium_btn_bottom_2_dialog.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_medium_btn_bottom_2_dialog.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\dialog_speech.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\dialog_speech.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_sticker.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_sticker.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\layout_bottom_view.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\layout_bottom_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_success.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_success.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_color.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_color.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/dialog_color_picker.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/dialog_color_picker.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\dialog_create_name.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\dialog_create_name.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/layout_bottom_ss.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/layout_bottom_ss.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_big_btn_bottom_shimmer.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_big_btn_bottom_shimmer.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_small_btn_bottom_shimmer.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_small_btn_bottom_shimmer.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_big_btn_bottom.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_big_btn_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_big_btn_top_view.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_big_btn_top_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_language.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_language.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/layout_actionbar.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/layout_actionbar.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/activity_customize.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/activity_customize.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_font.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_font.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/activity_choose_character.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/activity_choose_character.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_medium_btn_bottom_shimmer.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_medium_btn_bottom_shimmer.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_collap_banner_shimmer.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_collap_banner_shimmer.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\fragment_my_design.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\fragment_my_design.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_big_btn_top.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_big_btn_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\layout_actionbar.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\layout_actionbar.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/activity_splash.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/activity_splash.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/item_customize.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/item_customize.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_random_character.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_random_character.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\layout_bottom_ss.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\layout_bottom_ss.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/activity_success.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/activity_success.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/activity_home.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/activity_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_text_color.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_text_color.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_choose_character.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_choose_character.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\layout_bottom.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\layout_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_customize.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_customize.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_small_is_banner.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_small_is_banner.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_small_btn_bottom.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_small_btn_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_my_design.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_my_design.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_big_btn_top_shimmer.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_big_btn_top_shimmer.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_settings.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_settings.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/item_random_character.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/item_random_character.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/dialog_rate.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/dialog_rate.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\fragment_my_avatar.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\fragment_my_avatar.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\dialog_confirm.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\dialog_confirm.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/activity_add_character.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/activity_add_character.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\popup_my_album.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\popup_my_album.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_banner.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_banner.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_view.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_medium_btn_bottom_2.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_medium_btn_bottom_2.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_splash.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_customize.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_customize.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_intro.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_intro.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_my_album.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_my_album.xml"
+    },
+    {
+        "merged": "com.pfp.pride.app-mergeDebugResources-5:/layout/item_choose_avatar.xml",
+        "source": "com.pfp.pride.app-main-8:/layout/item_choose_avatar.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_intro.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_intro.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_background_color.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_background_color.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_album.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_album.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_add_character.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_add_character.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_language.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_language.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_permission.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_permission.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_bottom_navigation.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_bottom_navigation.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\item_choose_avatar.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\item_choose_avatar.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_random_character.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_random_character.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\layout_custom_input.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\layout_custom_input.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_small_btn_top.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_small_btn_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\ads_native_big_btn_bottom_media_full.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\ads_native_big_btn_bottom_media_full.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-mergeDebugResources-5:\\layout\\activity_home.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.pfp.pride.app-main-8:\\layout\\activity_home.xml"
+    }
+]

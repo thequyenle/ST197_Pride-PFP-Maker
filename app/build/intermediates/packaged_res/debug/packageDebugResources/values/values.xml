@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <attr name="strokeJoinStyle">
+        <enum name="miter" value="0"/>
+        <enum name="bevel" value="1"/>
+        <enum name="round" value="2"/>
+    </attr>
+    <attr format="dimension" name="strokeMiter"/>
+    <color name="app">#D343C0</color>
+    <color name="black">#000000</color>
+    <color name="blue_app">#A1CCEF</color>
+    <color name="colorPrimary">#33393A</color>
+    <color name="color_1">#E2D2D2</color>
+    <color name="color_10">#EAE5E1</color>
+    <color name="color_11">#FFCDFE</color>
+    <color name="color_12">#FFFED2</color>
+    <color name="color_13">#AFCFFE</color>
+    <color name="color_14">#CBE7DB</color>
+    <color name="color_15">#C94D91</color>
+    <color name="color_16">#57B2D9</color>
+    <color name="color_17">#FE0037</color>
+    <color name="color_18">#5AD7C3</color>
+    <color name="color_19">#BD773B</color>
+    <color name="color_2">#DCD5FF</color>
+    <color name="color_3">#B7E9F8</color>
+    <color name="color_4">#FFB4B9</color>
+    <color name="color_5">#EBAEF1</color>
+    <color name="color_6">#F5D0C8</color>
+    <color name="color_7">#FDE6C4</color>
+    <color name="color_8">#D2ECE9</color>
+    <color name="color_9">#EAE5E1</color>
+    <color name="color_app">#A1CCEF</color>
+    <color name="colorapp">#A1CCEF</color>
+    <color name="dark">#000000</color>
+    <color name="native_bg">#3BEEE6FD</color>
+    <color name="native_bg_ad">#3AB8BDFD</color>
+    <color name="native_bg_btn">#AB5BFF</color>
+    <color name="native_bg_view">#66AC0506</color>
+    <color name="native_btn_bg">#AB5BFF</color>
+    <color name="native_collap_btn_bg">#AB5BFF</color>
+    <color name="native_text_color">#FFFFFF</color>
+    <color name="native_text_color_black">#000000</color>
+    <color name="native_text_color_btn">#FFFFFF</color>
+    <color name="native_text_color_intro">#AB5BFF</color>
+    <color name="orange_F6">#F68300</color>
+    <color name="purple_F0">#F091F5</color>
+    <color name="purple_text">#470092</color>
+    <color name="red_BA">#BA0101</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="yellow_F6">#F6CD46</color>
+    <string name="add_image">Add Image</string>
+    <string name="add_to_telegram">Add To Telegram</string>
+    <string name="add_to_whatsapp">Add To WhatsApp</string>
+    <string name="allow">Allow</string>
+    <string name="an_error_occurred">An error occurred, please try again later.</string>
+    <string name="app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="app_name" translatable="false">Pony OC: Pony Avatar Maker</string>
+    <string name="are_you_sure_want_to_delete_this_item">Do you want to delete?</string>
+    <string name="are_you_sure_you_want_to_delete_the_image">Are you sure you want to delete the image?</string>
+    <string name="background">Background</string>
+    <string name="category">Pixel Maker</string>
+    <string name="change_your_whole_design_are_you_sure">Do you want to reset?</string>
+    <string name="character_maker">Pixel Maker</string>
+    <string name="choose_color">Choose Color</string>
+    <string name="color">Color</string>
+    <string name="continue_per">Continue</string>
+    <string name="create_package_name">Create Package Name</string>
+    <string name="delete">Delete</string>
+    <string name="delete_failed_please_try_again">Delete failed, please try again!</string>
+    <string name="delete_your_customize">Delete your customize</string>
+    <string name="do_you_want_to_exit">Do you want to exit?</string>
+    <string name="done">Done</string>
+    <string name="download">Download</string>
+    <string name="download_failed_please_try_again_later">Download failed, please try again later!</string>
+    <string name="download_success">Download successful to the Pony OC: Pony Avatar Maker album</string>
+    <string name="downloading">Downloading...</string>
+    <string name="enter_your_package_name">Enter your package name</string>
+    <string name="error">Error</string>
+    <string name="exit">Exit</string>
+    <string name="exit_add">Exit your background</string>
+    <string name="exit_bg">Exit your background</string>
+    <string name="five_star">Thanks for your feedback</string>
+    <string name="five_star_title">We love you too!</string>
+    <string name="font">Font</string>
+    <string name="four_star">Thanks for your feedback</string>
+    <string name="four_star_title">We love you too!</string>
+    <string name="gcm_defaultSenderId" translatable="false">345570565091</string>
+    <string name="go_to_setting_message">The app needs this permission</string>
+    <string name="google_api_key" translatable="false">AIzaSyA0e7UVrMoH02ynePesy9UUIUDgiVSY4as</string>
+    <string name="google_app_id" translatable="false">1:345570565091:android:6fd6ed13936d6aee261ed6</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyA0e7UVrMoH02ynePesy9UUIUDgiVSY4as</string>
+    <string name="google_storage_bucket" translatable="false">st217-pony-oc-maker.firebasestorage.app</string>
+    <string name="granted_notification">Notification permission granted</string>
+    <string name="granted_storage">Storage permission granted</string>
+    <string name="have_rated">Thank you for rate our app</string>
+    <string name="haven_t_saved_it_yet_do_you_want_to_exit">Haven’t saved it yet, are you sure to exit?</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_world">Type your content...</string>
+    <string name="image">Image</string>
+    <string name="image_has_been_saved_successfully">The project has been saved successfully!</string>
+    <string name="input_text">Input text</string>
+    <string name="inter_all" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="inter_per" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="inter_splash" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="internet_required_for_more_characters">Internet required for more characters</string>
+    <string name="invalid_action">Error</string>
+    <string name="invalid_action_msg">Application not installed</string>
+    <string name="language">Language</string>
+    <string name="limit_30_items">Only a maximum of 30 items can be added</string>
+    <string name="limit_3_items">At least 3 items are required to create a sticker</string>
+    <string name="loading">Loading</string>
+    <string name="music">Music</string>
+    <string name="my_album">My album</string>
+    <string name="my_avatar">My Avatar</string>
+    <string name="my_character">My Pixel</string>
+    <string name="my_character_in">My Work</string>
+    <string name="my_creation">My Creation</string>
+    <string name="my_design">My Design</string>
+    <string name="my_pony">My Pony</string>
+    <string name="my_work">My Work</string>
+    <string name="native_all" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_category" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_cl_bg" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_cl_category" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_cl_custom" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_cl_detail" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_cl_home" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_cl_myWork" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_cl_success" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_cl_trending" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_creation" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_dialog_custom" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_intro" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_language" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_myWork" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_per" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="native_splash" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="next">Next</string>
+    <string name="no">No</string>
+    <string name="no_app_found_to_handle_this_action">No app found to handle this action</string>
+    <string name="no_internet">No Internet</string>
+    <string name="no_item_desgin">No current history</string>
+    <string name="no_item_here">No Item Here</string>
+    <string name="no_item_space">No current history</string>
+    <string name="not_select_lang">Please select a language</string>
+    <string name="notification">Notification</string>
+    <string name="null_edt">Please enter text</string>
+    <string name="ok">Ok</string>
+    <string name="one_star">Please give us some feedback</string>
+    <string name="one_star_title">Oh, no!</string>
+    <string name="open_resume" translatable="false">ca-app-pub-3940256099942544/9257395921</string>
+    <string name="permission">Permission</string>
+    <string name="pfp_random">Pride PFP Random</string>
+    <string name="please_check_your_internet">Please check your internet</string>
+    <string name="please_enter_your_package_name">Please enter your package name!</string>
+    <string name="please_select_an_image">Please select an image</string>
+    <string name="pride_maker">Pride OC Maker</string>
+    <string name="pride_pfp_overlay">Pride PFP Overlay</string>
+    <string name="privacy_policy"><![CDATA[Privacy & policy]]></string>
+    <string name="project_id" translatable="false">st217-pony-oc-maker</string>
+    <string name="quick_maker">Quick Maker</string>
+    <string name="quick_maker_in">Quick mix</string>
+    <string name="rate">Rate</string>
+    <string name="rate_us">Rate us</string>
+    <string name="rate_us_0">You have not rated it yet!</string>
+    <string name="reset">Reset</string>
+    <string name="save">Save</string>
+    <string name="save_failed_please_try_again">Save failed, please try again!</string>
+    <string name="settings">Setting</string>
+    <string name="share">Share</string>
+    <string name="share_app">Share app</string>
+    <string name="speech_bubbles">Speech Bubbles</string>
+    <string name="sticker">Sticker</string>
+    <string name="storage">Storage</string>
+    <string name="successfully">Successfully</string>
+    <string name="text">Text</string>
+    <string name="this_action_can_contain_ads">This action can contain ads</string>
+    <string name="three_star">Please give us some feedback</string>
+    <string name="three_star_title">Oh, no!</string>
+    <string name="title_1">Make Your Perfect Pride</string>
+    <string name="title_11">Diverse Character Style</string>
+    <string name="title_2">Character Diversity</string>
+    <string name="title_22">Create Your Own Avatar \nHowever You Like</string>
+    <string name="title_3">Variety Items</string>
+    <string name="to_access">to access photos on your device</string>
+    <string name="to_access_13">to access notification on your device</string>
+    <string name="trending">Trending Custom</string>
+    <string name="trending_tv">Pride PFP Trending</string>
+    <string name="two_star">Please give us some feedback</string>
+    <string name="two_star_title">Oh, no!</string>
+    <string name="type_your_content">Type your content...</string>
+    <string name="wait_a_minute">Wait a minute</string>
+    <string name="yes">Yes</string>
+    <string name="zero_star">Let us know your experience</string>
+    <string name="zero_star_title">Do you like the app?</string>
+    <style name="Base.Theme.BaseProject" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+    <style name="BaseDialog" ns1:keep="@style/BaseDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="CutCornerCardShape" ns1:keep="@style/CutCornerCardShape" parent="">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.Pony.Rounded20" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">40dp</item>
+    </style>
+    <style name="Theme.BaseProject" parent="Base.Theme.BaseProject"/>
+    <style name="border_image_5" ns1:keep="@style/border_image_5" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">5dp</item>
+    </style>
+    <style name="single_marquee">
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+    </style>
+    <declare-styleable name="BlurLayout">
+        <attr format="float" name="downscaleFactor"/>
+        <attr format="integer" name="blurRadius"/>
+        <attr format="integer" name="fps"/>
+    </declare-styleable>
+    <declare-styleable name="CropImageView">
+        <attr name="cropGuidelines">
+            <enum name="off" value="0"/>
+            <enum name="onTouch" value="1"/>
+            <enum name="on" value="2"/>
+        </attr>
+        <attr name="cropScaleType">
+            <enum name="fitCenter" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="centerCrop" value="2"/>
+            <enum name="centerInside" value="3"/>
+        </attr>
+        <attr name="cropShape">
+            <enum name="rectangle" value="0"/>
+            <enum name="oval" value="1"/>
+            <enum name="rectangleVerticalOnly" value="2"/>
+            <enum name="rectangleHorizontalOnly" value="3"/>
+        </attr>
+        <attr name="cornerShape">
+            <enum name="rectangle" value="0"/>
+            <enum name="oval" value="1"/>
+        </attr>
+        <attr format="boolean" name="cropAutoZoomEnabled"/>
+        <attr format="integer" name="cropMaxZoom"/>
+        <attr format="boolean" name="cropMultiTouchEnabled"/>
+        <attr format="boolean" name="cropCenterMoveEnabled"/>
+        <attr format="boolean" name="cropFixAspectRatio"/>
+        <attr format="integer" name="cropAspectRatioX"/>
+        <attr format="integer" name="cropAspectRatioY"/>
+        <attr format="float" name="cropInitialCropWindowPaddingRatio"/>
+        <attr format="dimension" name="cropBorderLineThickness"/>
+        <attr format="color" name="cropBorderLineColor"/>
+        <attr format="dimension" name="cropBorderCornerThickness"/>
+        <attr format="dimension" name="cropBorderCornerOffset"/>
+        <attr format="dimension" name="cropBorderCornerLength"/>
+        <attr format="color" name="cropBorderCornerColor"/>
+        <attr format="dimension" name="cropGuidelinesThickness"/>
+        <attr format="color" name="cropGuidelinesColor"/>
+        <attr format="color" name="cropBackgroundColor"/>
+        <attr format="dimension" name="cropSnapRadius"/>
+        <attr format="dimension" name="cropTouchRadius"/>
+        <attr format="boolean" name="cropSaveBitmapToInstanceState"/>
+        <attr format="boolean" name="cropShowCropOverlay"/>
+        <attr format="boolean" name="cropShowProgressBar"/>
+        <attr format="dimension" name="cropMinCropWindowWidth"/>
+        <attr format="dimension" name="cropMinCropWindowHeight"/>
+        <attr format="float" name="cropMinCropResultWidthPX"/>
+        <attr format="float" name="cropMinCropResultHeightPX"/>
+        <attr format="float" name="cropMaxCropResultWidthPX"/>
+        <attr format="float" name="cropMaxCropResultHeightPX"/>
+        <attr format="boolean" name="cropFlipHorizontally"/>
+        <attr format="boolean" name="cropFlipVertically"/>
+        <attr format="color" name="cropCornerCircleFillColor"/>
+        <attr format="dimension" name="cropCornerRadius"/>
+        <attr format="float" name="cropperLabelTextSize"/>
+        <attr format="color" name="cropperLabelTextColor"/>
+        <attr format="string" name="cropperLabelText"/>
+        <attr format="boolean" name="cropShowLabel"/>
+    </declare-styleable>
+    <declare-styleable name="DoubleStrokeTextView">
+        <attr format="color" name="outerStrokeColor"/>
+        <attr format="dimension" name="outerStrokeWidth"/>
+        <attr format="color" name="innerStrokeColor"/>
+        <attr format="dimension" name="innerStrokeWidth"/>
+        <attr name="strokeJoinStyle"/>
+        <attr name="strokeMiter"/>
+    </declare-styleable>
+    <declare-styleable name="RatioFrameLayout">
+        <attr format="string" name="ratio"/> 
+    </declare-styleable>
+    <declare-styleable name="StickerView">
+        <attr format="boolean" name="showIcons"/>
+        <attr format="boolean" name="showBorder"/>
+        <attr format="boolean" name="bringToFrontCurrentSticker"/>
+        <attr format="color" name="borderColor"/>
+        <attr format="integer" name="borderAlpha"/>
+    </declare-styleable>
+    <declare-styleable name="StrokeTextView">
+        <attr format="dimension" name="strokeWidth"/>
+        <attr format="color" name="strokeColor"/>
+        <attr name="strokeJoinStyle"/>
+        <attr name="strokeMiter"/>
+        <attr format="color" name="gradientStartColor"/>
+        <attr format="color" name="gradientEndColor"/>
+        <attr format="boolean" name="useGradient"/>
+        <attr name="gradientOrientation">
+            <enum name="leftToRight" value="0"/>
+            <enum name="topToBottom" value="1"/>
+            <enum name="diagonal" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>
