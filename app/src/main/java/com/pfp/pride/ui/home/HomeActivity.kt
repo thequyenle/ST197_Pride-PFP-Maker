@@ -25,6 +25,7 @@ import com.pfp.pride.ui.choose_character.ChooseCharacterActivity
 import com.pfp.pride.core.extensions.tap
 import com.pfp.pride.core.extensions.strings
 import com.pfp.pride.ui.random_character.RandomCharacterActivity
+import com.pfp.pride.ui.trending.TrendingActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -56,6 +57,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             btnMaker.tap(800) { startIntentRightToLeft(ChooseCharacterActivity::class.java) }
             btnMyWork.tap(800) { showInterAll { startIntentRightToLeft(MyCreationActivity::class.java) } }
            btnRandomAll.tap(800) { showInterAll {startIntentRightToLeft(RandomCharacterActivity::class.java) }}
+            btnTrending.tap(800) {  startIntentRightToLeft(TrendingActivity::class.java)}
+
         }
     }
 

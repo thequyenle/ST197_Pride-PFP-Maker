@@ -167,6 +167,11 @@ object AssetHelper {
                 } else {
                     getDataColor(assetManager, character, folderOrImageSortedList, sortedLayer[i])
                 }
+                if (layer.isEmpty()) {
+                    Log.e("AssetDebug", "⚠️ EMPTY LAYER: character=$character, folder=${sortedLayer[i]}, folderOrImageSortedList=$folderOrImageSortedList")
+                } else {
+                    Log.d("AssetDebug", "✓ character=$character, folder=${sortedLayer[i]}, layerSize=${layer.size}")
+                }
                 val layerListModel = LayerListModel(positionCustom, positionNavigation, navigationImage, layer)
                 layerListModelList.add(layerListModel)
             }

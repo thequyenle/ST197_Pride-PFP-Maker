@@ -224,6 +224,10 @@ class CustomizeCharacterViewModel : ViewModel() {
                 item.isSelected = index == 0
             }
         }
+        Log.d("AssetDebug", "setFocusItemNavDefault: character=${_dataCustomize.value?.dataName}, itemNavList[0].size=${itemNavList.first().size}")
+        if (itemNavList.first().size < 2) {
+            Log.e("AssetDebug", "⚠️ CRASH HERE: character=${_dataCustomize.value?.dataName}, body layer chỉ có ${itemNavList.first().size} item (cần ≥2)")
+        }
         itemNavList.first()[0].isSelected = false
         itemNavList.first()[1].isSelected = true
     }
@@ -353,6 +357,13 @@ class CustomizeCharacterViewModel : ViewModel() {
     //----------------------------------------------------------------------------------------------------------------------
 // Color
     suspend fun setItemColorDefault() {
+        Log.d("AssetDebug", "setItemColorDefault: character=${_dataCustomize.value?.dataName}")
+        itemNavList.forEachIndexed { index, nav ->
+            val needed = if (index == 0) 2 else 3
+            if (nav.size < needed) {
+                Log.e("AssetDebug", "⚠️ CRASH HERE: character=${_dataCustomize.value?.dataName}, layer[$index] size=${nav.size} (cần ≥$needed) — layerFolder=${_dataCustomize.value?.layerList?.getOrNull(index)?.imageNavigation}")
+            }
+        }
         colorItemNavList.clear()
         for (i in 0 until _dataCustomize.value!!.layerList.size) {
             // Lấy đối tượng LayerModel đầu tiên trong danh sách con

@@ -1,11 +1,11 @@
 package com.pfp.pride.ui.random_character
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.pfp.pride.R
 import com.pfp.pride.core.helper.InternetHelper
 import com.pfp.pride.core.utils.state.HandleState
 import com.pfp.pride.data.model.custom.SuggestionModel
-import com.pfp.pride.ui.customize.CustomizeCharacterActivity
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class RandomCharacterViewModel : ViewModel() {
@@ -24,7 +24,7 @@ class RandomCharacterViewModel : ViewModel() {
         _isDataAPI.value = isAPI
     }
 
-    fun checkDataInternet(context: RandomCharacterActivity, action: (() -> Unit)) {
+    fun checkDataInternet(context: AppCompatActivity, action: (() -> Unit)) {
         if (!_isDataAPI.value) {
             action.invoke()
             return

@@ -44,6 +44,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.trending.TrendingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.choose_character.ChooseCharacterActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

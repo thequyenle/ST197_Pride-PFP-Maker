@@ -38,12 +38,10 @@ class ChooseCharacterActivity : BaseActivity<ActivityChooseCharacterBinding>() {
     }
 
     override fun initView() {
-        // Show loading when activity starts
-        lifecycleScope.launch {
-            showLoading()
+        if (dataViewModel.allData.value.isEmpty()) {
+            lifecycleScope.launch { showLoading() }
         }
         initRcv()
-
         dataViewModel.ensureData(this)
     }
 
