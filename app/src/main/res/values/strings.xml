@@ -130,4 +130,5 @@
     <string name="pfp_random">Pride PFP Random</string>
     <string name="trending_tv">Pride PFP Trending</string>
     <string name="pride_pfp_overlay">Pride PFP Overlay</string>
+    <string name="generate">Generate Random</string>
 </resources>

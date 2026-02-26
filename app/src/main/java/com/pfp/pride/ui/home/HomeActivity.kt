@@ -55,7 +55,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             actionBar.btnActionBarRight.tap(800) { startIntentRightToLeft(SettingsActivity::class.java) }
             btnMaker.tap(800) { startIntentRightToLeft(ChooseCharacterActivity::class.java) }
             btnMyWork.tap(800) { showInterAll { startIntentRightToLeft(MyCreationActivity::class.java) } }
-           // btnTrending.tap(800) { showInterAll {startIntentRightToLeft(RandomCharacterActivity::class.java) }}
+           btnRandomAll.tap(800) { showInterAll {startIntentRightToLeft(RandomCharacterActivity::class.java) }}
         }
     }
 
@@ -137,8 +137,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
         // Card 2: Slide from left (200ms delay)
         val slideFromLeft = AnimationUtils.loadAnimation(this, R.anim.slide_in_left_home)
-        binding.btnTrending.postDelayed({
-            binding.btnTrending.startAnimation(slideFromLeft)
+        binding.btnRandomAll.postDelayed({
+            binding.btnRandomAll.startAnimation(slideFromLeft)
             binding.tv2.startAnimation(slideFromLeft)
         }, 200)
 
