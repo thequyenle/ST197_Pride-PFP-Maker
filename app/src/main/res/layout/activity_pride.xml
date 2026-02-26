@@ -391,6 +391,7 @@
                     android:text="@string/pride_my_custom"
                     android:layout_marginBottom="8dp" />
 
+
                 <LinearLayout
                     android:id="@+id/btnAddCustomFlag"
                     android:layout_width="90dp"
@@ -409,6 +410,14 @@
                         android:fontFamily="@font/lobster14" />
 
                 </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCustomFlags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:nestedScrollingEnabled="false" />
 
                 <!-- Pride's Flag section -->
                 <TextView

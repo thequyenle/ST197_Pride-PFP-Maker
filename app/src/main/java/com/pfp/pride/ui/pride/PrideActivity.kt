@@ -54,8 +54,10 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
     private val allFlags = PrideFlagData.getFlags().toMutableList()
     private val selectedFlags = mutableListOf<PrideFlagModel>()
     private val customFlags = mutableListOf<CustomFlagModel>()
+    private val customFlagItems = mutableListOf<PrideFlagModel>()
 
     private lateinit var flagAdapter: PrideFlagAdapter
+    private lateinit var customFlagAdapter: PrideFlagAdapter
     private lateinit var chipAdapter: SelectedFlagChipAdapter
 
     private val pickImageLauncher = registerForActivityResult(
@@ -193,6 +195,8 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         croppedBitmap = null
         selectedFlags.clear()
         allFlags.forEach { it.isSelected = false }
+        customFlags.clear()
+        customFlagItems.clear()
         selectedLayout = LayoutStyle.CIRCLE
         imageZoom = 0.5f
         ringScale = 0.3f
@@ -321,7 +325,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
     // ==================== Step 3: Choose Flags ====================
 
     private fun setupFlagAdapter() {
-        flagAdapter = PrideFlagAdapter(this) { flag ->
+        val onFlagClick: (PrideFlagModel) -> Unit = { flag ->
             if (flag.isSelected) {
                 flag.isSelected = false
                 selectedFlags.remove(flag)
@@ -333,27 +337,41 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             }
             val maxReached = selectedFlags.size >= 4
             flagAdapter.setMaxReached(maxReached)
+            customFlagAdapter.setMaxReached(maxReached)
             chipAdapter.submitList(selectedFlags.toList())
             binding.selectedFlagsBar.visibility =
                 if (selectedFlags.isNotEmpty()) View.VISIBLE else View.GONE
             flagAdapter.submitList(allFlags.toList())
+            customFlagAdapter.submitList(customFlagItems.toList())
         }
+
+        flagAdapter = PrideFlagAdapter(this, onFlagClick)
         binding.rvFlags.apply {
             layoutManager = GridLayoutManager(this@PrideActivity, 3)
             adapter = flagAdapter
         }
         flagAdapter.submitList(allFlags.toList())
+
+        customFlagAdapter = PrideFlagAdapter(this, onFlagClick)
+        binding.rvCustomFlags.apply {
+            layoutManager = GridLayoutManager(this@PrideActivity, 3)
+            adapter = customFlagAdapter
+        }
+        customFlagAdapter.submitList(customFlagItems.toList())
     }
 
     private fun setupChipAdapter() {
         chipAdapter = SelectedFlagChipAdapter { flag ->
             flag.isSelected = false
             selectedFlags.remove(flag)
-            flagAdapter.setMaxReached(selectedFlags.size >= 4)
+            val maxReached = selectedFlags.size >= 4
+            flagAdapter.setMaxReached(maxReached)
+            customFlagAdapter.setMaxReached(maxReached)
             chipAdapter.submitList(selectedFlags.toList())
             binding.selectedFlagsBar.visibility =
                 if (selectedFlags.isNotEmpty()) View.VISIBLE else View.GONE
             flagAdapter.submitList(allFlags.toList())
+            customFlagAdapter.submitList(customFlagItems.toList())
         }
         binding.rvSelectedChips.apply {
             layoutManager = LinearLayoutManager(this@PrideActivity, LinearLayoutManager.HORIZONTAL, false)
@@ -368,15 +386,15 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         dialog.onCreateEvent = { customFlag ->
             dialog.dismiss()
             customFlags.add(customFlag)
-            // Add custom flag as a selectable item
             val newFlag = PrideFlagModel(
                 id = 100 + customFlags.size,
                 name = customFlag.name,
                 assetPath = "",
-                isSelected = false
+                isSelected = false,
+                customColors = customFlag.colors.toList()
             )
-            allFlags.add(0, newFlag)
-            flagAdapter.submitList(allFlags.toList())
+            customFlagItems.add(0, newFlag)
+            customFlagAdapter.submitList(customFlagItems.toList())
         }
     }
 

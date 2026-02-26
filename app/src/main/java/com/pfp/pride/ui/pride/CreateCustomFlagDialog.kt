@@ -26,7 +26,7 @@ class CreateCustomFlagDialog(context: Context) :
     var onCloseEvent: (() -> Unit) = {}
     var onDismissEvent: (() -> Unit) = {}
 
-    private val colors = mutableListOf<Int>(Color.BLACK, Color.parseColor("#CCCCCC"))
+    private val colors = mutableListOf<Int>(Color.BLACK)
     private lateinit var colorAdapter: CustomColorAdapter
 
     override fun initView() {
@@ -48,7 +48,7 @@ class CreateCustomFlagDialog(context: Context) :
             btnClose.tap { onCloseEvent.invoke() }
 
             btnAddColor.tap {
-                if (colors.size < 8) {
+                if (colors.size < 10) {
                     colors.add(Color.WHITE)
                     colorAdapter.submitList(colors.toList())
                     updatePreview()

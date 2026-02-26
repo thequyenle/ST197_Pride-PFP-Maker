@@ -1,7 +1,10 @@
 package com.pfp.pride.ui.pride.adapter
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.pfp.pride.core.base.BaseAdapter
@@ -28,14 +31,18 @@ class PrideFlagAdapter(
         binding.apply {
             tvFlagName.text = item.name
 
-            // Load flag image from assets
-            try {
-                val inputStream = context.assets.open(item.assetPath)
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                imgFlag.setImageBitmap(bitmap)
-                inputStream.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
+            // Load flag image: from assets or from custom colors
+            if (item.assetPath.isNotEmpty()) {
+                try {
+                    val inputStream = context.assets.open(item.assetPath)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    imgFlag.setImageBitmap(bitmap)
+                    inputStream.close()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            } else if (!item.customColors.isNullOrEmpty()) {
+                imgFlag.setImageBitmap(buildCustomFlagBitmap(item.customColors))
             }
 
             // Checkbox state
@@ -65,5 +72,18 @@ class PrideFlagAdapter(
                 }
             }
         }
+    }
+
+    private fun buildCustomFlagBitmap(colors: List<Int>): Bitmap {
+        val size = 200
+        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
+        val stripeHeight = size.toFloat() / colors.size
+        colors.forEachIndexed { i, color ->
+            paint.color = color
+            canvas.drawRect(0f, i * stripeHeight, size.toFloat(), (i + 1) * stripeHeight, paint)
+        }
+        return bitmap
     }
 }
