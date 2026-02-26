@@ -46,7 +46,11 @@ class RandomCharacterAdapter(val context: Context) :
             Log.d("RandomAdapter", "Internal random path: ${item.pathInternalRandom}")
 
             // ✅ Cancel any existing job for this position
-            activeJobs[position]?.cancel()
+            val existingJob = activeJobs[position]
+            if (existingJob != null && existingJob.isActive) {
+                Log.w("RandomAdapter", "⚠ Cancelling existing job at position $position")
+                existingJob.cancel()
+            }
 
             // ✅ OPTIMIZATION: If already processed, just load the cached image
             if (item.pathInternalRandom.isNotEmpty()) {
@@ -74,6 +78,10 @@ class RandomCharacterAdapter(val context: Context) :
             // ✅ Store the job so we can cancel it if the view is recycled
             val job = CoroutineScope(SupervisorJob() + Dispatchers.IO + handleExceptionCoroutine).launch {
                 val job1 = async {
+                    if (item.pathSelectedList.isEmpty()) {
+                        Log.e("RandomAdapter", "✗ position $position: pathSelectedList is EMPTY → cannot render")
+                        return@async false
+                    }
                     Log.d("RandomAdapter", "Loading first layer: ${item.pathSelectedList.first()}")
                     val bitmapDefault = Glide.with(context).asBitmap().load(item.pathSelectedList.first()).submit().get()
                     width = bitmapDefault.width/2 ?: ValueKey.WIDTH_BITMAP
@@ -93,6 +101,7 @@ class RandomCharacterAdapter(val context: Context) :
 
                 withContext(Dispatchers.Main) {
                     if (job1.await()) {
+                        Log.d("RandomAdapter", "job1 done at position $position, pathInternalRandom='${items[position].pathInternalRandom}'")
                         if (items[position].pathInternalRandom == ""){
                             Log.d("RandomAdapter", "Creating combined bitmap...")
                             val combinedBitmap = createBitmap(width, height)

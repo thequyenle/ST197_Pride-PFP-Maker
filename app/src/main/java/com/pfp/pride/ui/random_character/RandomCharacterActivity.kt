@@ -53,6 +53,7 @@ class RandomCharacterActivity : BaseActivity<ActivityRandomCharacterBinding>() {
     }
 
     override fun initView() {
+        lifecycleScope.launch { showLoading() }
         dataViewModel.ensureData(this)
     }
 
@@ -109,7 +110,6 @@ class RandomCharacterActivity : BaseActivity<ActivityRandomCharacterBinding>() {
         }
 
         CoroutineScope(SupervisorJob() + Dispatchers.IO + handleExceptionCoroutine).launch {
-            showLoading()
             // Get data from list
             val deferred1 = async {
                 val timeStart1 = System.currentTimeMillis()

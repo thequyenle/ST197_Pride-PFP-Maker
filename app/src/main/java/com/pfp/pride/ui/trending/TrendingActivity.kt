@@ -41,10 +41,12 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 
 class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
 
@@ -112,40 +114,47 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
         }
 
         CoroutineScope(SupervisorJob() + Dispatchers.Main + handleExceptionCoroutine).launch {
-            val done = withContext(Dispatchers.IO) {
-                val hasInternet = InternetHelper.isInternetAvailable(this@TrendingActivity)
-                val filteredData = if (hasInternet) {
-                    dataViewModel.allData.value
-                } else {
-                    dataViewModel.allData.value.filter { !it.isFromAPI }
-                }
-
-                for (i in 0 until filteredData.size) {
-                    try {
-                        val currentData = filteredData[i]
-                        customizeCharacterViewModel.positionSelected =
-                            dataViewModel.allData.value.indexOf(currentData)
-                        customizeCharacterViewModel.setDataCustomize(currentData)
-                        customizeCharacterViewModel.updateAvatarPath(currentData.avatar)
-                        customizeCharacterViewModel.resetDataList()
-                        customizeCharacterViewModel.addValueToItemNavList()
-                        customizeCharacterViewModel.setItemColorDefault()
-                        customizeCharacterViewModel.setBottomNavigationListDefault()
-
-                        for (j in 0 until ValueKey.RANDOM_QUANTITY) {
-                            customizeCharacterViewModel.setClickRandomFullLayer()
-                            val suggestion = customizeCharacterViewModel.getSuggestionList()
-                            viewModel.updateRandomList(suggestion)
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-                viewModel.upsideDownList()
-                true
+            val hasInternet = withContext(Dispatchers.IO) {
+                InternetHelper.isInternetAvailable(this@TrendingActivity)
             }
-            if (done) {
-                showRandomSuggestion { lifecycleScope.launch { dismissLoading() } }
+            val filteredData = if (hasInternet) {
+                dataViewModel.allData.value
+            } else {
+                dataViewModel.allData.value.filter { !it.isFromAPI }
+            }
+            if (filteredData.isEmpty()) return@launch
+
+            suspend fun processCharacter(data: com.pfp.pride.data.model.custom.CustomizeModel) {
+                customizeCharacterViewModel.positionSelected =
+                    dataViewModel.allData.value.indexOf(data)
+                customizeCharacterViewModel.setDataCustomize(data)
+                customizeCharacterViewModel.updateAvatarPath(data.avatar)
+                customizeCharacterViewModel.resetDataList()
+                customizeCharacterViewModel.addValueToItemNavList()
+                customizeCharacterViewModel.setItemColorDefault()
+                customizeCharacterViewModel.setBottomNavigationListDefault()
+                for (j in 0 until ValueKey.RANDOM_QUANTITY) {
+                    customizeCharacterViewModel.setClickRandomFullLayer()
+                    val suggestion = customizeCharacterViewModel.getSuggestionList()
+                    viewModel.updateRandomList(suggestion)
+                }
+            }
+
+            // Xử lý character đầu tiên → show ngay
+            withContext(Dispatchers.IO) {
+                try { processCharacter(filteredData[0]) } catch (e: Exception) { e.printStackTrace() }
+                viewModel.upsideDownList()
+            }
+            showRandomSuggestion { lifecycleScope.launch { dismissLoading() } }
+
+            // Xử lý phần còn lại ở background
+            if (filteredData.size > 1) {
+                withContext(Dispatchers.IO) {
+                    for (i in 1 until filteredData.size) {
+                        try { processCharacter(filteredData[i]) } catch (e: Exception) { e.printStackTrace() }
+                    }
+                    viewModel.upsideDownList()
+                }
             }
         }
     }
@@ -168,7 +177,6 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
         binding.btnEdit.visibility = View.INVISIBLE
 
         val totalDuration = 800L
-        val finalModel = viewModel.randomList.random()
 
         // Show GIF while generating
         Glide.with(this).asGif().load(R.drawable.gif).into(binding.imvImage)
@@ -185,6 +193,29 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
 
             diceAnim.cancel()
             binding.dices.rotation = 0f
+
+            // Check internet sau khi delay xong, timeout 3s để tránh hang khi mất mạng
+            val hasInternet = withContext(Dispatchers.IO) {
+                try {
+                    withTimeout(3000) { InternetHelper.isInternetAvailable(this@TrendingActivity) }
+                } catch (e: TimeoutCancellationException) {
+                    false
+                }
+            }
+            val availableList = if (hasInternet) {
+                viewModel.randomList
+            } else {
+                viewModel.randomList.filter { model ->
+                    val character = dataViewModel.allData.value.firstOrNull { it.avatar == model.avatarPath }
+                    character?.isFromAPI != true
+                }
+            }
+            val finalModel = availableList.randomOrNull() ?: run {
+                isAnimating = false
+                binding.btnGenerate.visibility = View.VISIBLE
+                binding.btnEdit.visibility = View.VISIBLE
+                return@launch
+            }
 
             currentSuggestion = finalModel
             renderSuggestion(finalModel) {
