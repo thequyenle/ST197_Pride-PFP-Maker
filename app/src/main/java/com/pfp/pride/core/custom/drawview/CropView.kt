@@ -5,10 +5,12 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.DashPathEffect
 import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.PointF
+import android.graphics.RectF
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -51,7 +53,11 @@ class CropView : AppCompatImageView {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (leftTop!!.equals(0, 0)) resetPoints()
-        canvas.drawRect(leftTop!!.x.toFloat(), leftTop!!.y.toFloat(), rightBottom!!.x.toFloat(), rightBottom!!.y.toFloat(), paint)
+        val radius = 12f * resources.displayMetrics.density
+        canvas.drawRoundRect(
+            RectF(leftTop!!.x.toFloat(), leftTop!!.y.toFloat(), rightBottom!!.x.toFloat(), rightBottom!!.y.toFloat()),
+            radius, radius, paint
+        )
     }
 
     @SuppressLint("ClickableViewAccessibility") override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -68,9 +74,10 @@ class CropView : AppCompatImageView {
     }
 
     private fun initCropView() {
-        paint.color = Color.YELLOW
+        paint.color = Color.BLACK
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 5f
+        paint.strokeWidth = 3f
+        paint.pathEffect = DashPathEffect(floatArrayOf(16f, 10f), 0f)
         leftTop = Point()
         rightBottom = Point()
         center = Point()

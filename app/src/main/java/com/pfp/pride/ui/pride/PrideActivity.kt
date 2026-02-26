@@ -120,8 +120,11 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
                 updatePreview()
             }
             btnCenterImage.tap { updatePreview() }
-            switchFlagMode.setOnCheckedChangeListener { _, checked ->
-                flagModeRing = checked
+            switchFlagMode.tap {
+                flagModeRing = !flagModeRing
+                switchFlagMode.setImageResource(
+                    if (flagModeRing) R.drawable.ic_sw_on else R.drawable.ic_sw_off
+                )
                 updatePreview()
             }
 
@@ -204,7 +207,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         resultBitmap = null
         binding.seekImageZoom.progress = 50
         binding.seekRingScale.progress = 30
-        binding.switchFlagMode.isChecked = true
+        binding.switchFlagMode.setImageResource(R.drawable.ic_sw_on)
         clearSelectedImage()
         flagAdapter.submitList(allFlags.toList())
         chipAdapter.submitList(emptyList())
