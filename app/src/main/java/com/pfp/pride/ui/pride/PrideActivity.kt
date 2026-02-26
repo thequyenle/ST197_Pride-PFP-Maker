@@ -1,0 +1,602 @@
+package com.pfp.pride.ui.pride
+
+import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.RectF
+import android.net.Uri
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.SeekBar
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.pfp.pride.R
+import com.pfp.pride.core.base.BaseActivity
+import com.pfp.pride.core.extensions.gone
+import com.pfp.pride.core.extensions.tap
+import com.pfp.pride.core.extensions.visible
+import com.pfp.pride.core.helper.MediaHelper
+import com.pfp.pride.data.model.pride.CustomFlagModel
+import com.pfp.pride.data.model.pride.LayoutStyle
+import com.pfp.pride.data.model.pride.PrideFlagData
+import com.pfp.pride.data.model.pride.PrideFlagModel
+import com.pfp.pride.databinding.ActivityPrideBinding
+import com.pfp.pride.ui.my_creation.MyCreationActivity
+import com.pfp.pride.ui.pride.adapter.PrideFlagAdapter
+import com.pfp.pride.ui.pride.adapter.SelectedFlagChipAdapter
+import com.pfp.pride.core.extensions.startIntentRightToLeft
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+
+class PrideActivity : BaseActivity<ActivityPrideBinding>() {
+
+    private var currentStep = 1
+    private val totalSteps = 6
+
+    // State
+    private var selectedImageBitmap: Bitmap? = null
+    private var croppedBitmap: Bitmap? = null
+    private var selectedLayout = LayoutStyle.CIRCLE
+    private var imageZoom = 0.5f
+    private var ringScale = 0.3f
+    private var flagModeRing = true
+    private var resultBitmap: Bitmap? = null
+
+    private val allFlags = PrideFlagData.getFlags().toMutableList()
+    private val selectedFlags = mutableListOf<PrideFlagModel>()
+    private val customFlags = mutableListOf<CustomFlagModel>()
+
+    private lateinit var flagAdapter: PrideFlagAdapter
+    private lateinit var chipAdapter: SelectedFlagChipAdapter
+
+    private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { loadImage(it) }
+    }
+
+    override fun setViewBinding() = ActivityPrideBinding.inflate(LayoutInflater.from(this))
+
+    override fun initView() {
+        setupFlagAdapter()
+        setupChipAdapter()
+    }
+
+    override fun viewListener() {
+        binding.apply {
+            // Upload box tap (step 1)
+            uploadBox.tap { pickImageLauncher.launch("image/*") }
+            btnClearImage.tap { clearSelectedImage() }
+            btnChangeImage.tap { pickImageLauncher.launch("image/*") }
+
+            // Step 2 crop buttons
+            btnCropReset.tap { cropView.resetPoints() }
+            btnCropCenter.tap { cropView.resetPoints() }
+
+            // Step 3 custom flag
+            btnAddCustomFlag.tap { openCreateCustomFlagDialog() }
+
+            // Step 4 layout options
+            optionCircle.tap { selectLayoutOption(LayoutStyle.CIRCLE) }
+            optionSquare.tap { selectLayoutOption(LayoutStyle.SQUARE) }
+            optionBackground.tap { selectLayoutOption(LayoutStyle.BACKGROUND) }
+
+            // Step 5 sliders
+            seekImageZoom.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
+                    imageZoom = progress / 100f
+                    updatePreview()
+                }
+                override fun onStartTrackingTouch(sb: SeekBar?) {}
+                override fun onStopTrackingTouch(sb: SeekBar?) {}
+            })
+            seekRingScale.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
+                    ringScale = progress / 100f
+                    updatePreview()
+                }
+                override fun onStartTrackingTouch(sb: SeekBar?) {}
+                override fun onStopTrackingTouch(sb: SeekBar?) {}
+            })
+            btnDefaultZoom.tap {
+                seekImageZoom.progress = 50
+                imageZoom = 0.5f
+                updatePreview()
+            }
+            btnDefaultRing.tap {
+                seekRingScale.progress = 30
+                ringScale = 0.3f
+                updatePreview()
+            }
+            btnCenterImage.tap { updatePreview() }
+            switchFlagMode.setOnCheckedChangeListener { _, checked ->
+                flagModeRing = checked
+                updatePreview()
+            }
+
+            // Step 6 buttons
+            btnDownload.tap { downloadResult() }
+            btnCreateAnother.tap { resetToStep1() }
+            btnMyWork.tap { startIntentRightToLeft(MyCreationActivity::class.java) }
+
+            // Bottom nav
+            btnPrevious.tap { goToPreviousStep() }
+            btnStartOver.tap { resetToStep1() }
+            btnContinue.tap { goToNextStep() }
+        }
+    }
+
+    override fun initActionBar() {
+        binding.actionBar.apply {
+            btnActionBarLeft.setImageResource(R.drawable.ic_back)
+            btnActionBarLeft.visible()
+            btnActionBarLeft.tap { handleBackLeftToRight() }
+            tvCenter.text = getString(R.string.pride_pfp_overlay)
+            tvCenter.visible()
+        }
+    }
+
+    override fun dataObservable() {}
+
+    // ==================== Navigation ====================
+
+    private fun goToNextStep() {
+        if (currentStep == 1 && selectedImageBitmap == null) {
+            binding.errorNoImage.visible()
+            return
+        }
+        if (currentStep == 2) {
+            performCrop()
+        }
+        if (currentStep == 3 && selectedFlags.isEmpty()) {
+            showToast(R.string.pride_select_at_least_one)
+            return
+        }
+        if (currentStep < totalSteps) {
+            if (currentStep == 4) {
+                generatePreviewBitmap()
+            }
+            if (currentStep == 5) {
+                resultBitmap = generateFinalBitmap()
+                binding.imgResult.setImageBitmap(resultBitmap)
+            }
+            currentStep++
+            updateStep()
+            // Set CropView image right after switching to step 2
+            if (currentStep == 2) {
+                selectedImageBitmap?.let { binding.cropView.setImageBitmap(it) }
+            }
+        }
+    }
+
+    private fun goToPreviousStep() {
+        if (currentStep > 1) {
+            currentStep--
+            updateStep()
+        } else {
+            handleBackLeftToRight()
+        }
+    }
+
+    private fun resetToStep1() {
+        currentStep = 1
+        selectedImageBitmap = null
+        croppedBitmap = null
+        selectedFlags.clear()
+        allFlags.forEach { it.isSelected = false }
+        selectedLayout = LayoutStyle.CIRCLE
+        imageZoom = 0.5f
+        ringScale = 0.3f
+        flagModeRing = true
+        resultBitmap = null
+        binding.seekImageZoom.progress = 50
+        binding.seekRingScale.progress = 30
+        binding.switchFlagMode.isChecked = true
+        clearSelectedImage()
+        flagAdapter.submitList(allFlags.toList())
+        chipAdapter.submitList(emptyList())
+        updateStep()
+    }
+
+    private fun updateStep() {
+        val steps = listOf(
+            binding.step1Layout,
+            binding.step2Layout,
+            binding.step3Layout,
+            binding.step4Layout,
+            binding.step5Layout,
+            binding.step6Layout
+        )
+        steps.forEachIndexed { index, view ->
+            view.visibility = if (index + 1 == currentStep) View.VISIBLE else View.GONE
+        }
+        updateDots()
+        updateStepLabel()
+        updateBottomNav()
+    }
+
+    private fun updateDots() {
+        val dots = listOf(
+            binding.dot1, binding.dot2, binding.dot3,
+            binding.dot4, binding.dot5, binding.dot6
+        )
+        dots.forEachIndexed { index, dot ->
+            val stepNum = index + 1
+            val bg = when {
+                stepNum < currentStep -> R.drawable.bg_pride_step_done
+                stepNum == currentStep -> R.drawable.bg_pride_step_active
+                else -> R.drawable.bg_pride_step_inactive
+            }
+            dot.setBackgroundResource(bg)
+        }
+    }
+
+    private fun updateStepLabel() {
+        binding.tvStepCounter.text = "$currentStep/$totalSteps"
+        val label = when (currentStep) {
+            1 -> R.string.pride_choose_image
+            2 -> R.string.pride_crop_image
+            3 -> R.string.pride_choose_flags
+            4 -> R.string.pride_choose_layout
+            5 -> R.string.pride_choose_design
+            6 -> R.string.pride_result_title
+            else -> R.string.pride_choose_image
+        }
+        binding.tvStepLabel.setText(label)
+    }
+
+    private fun updateBottomNav() {
+        binding.layoutBottomNav.visibility =
+            if (currentStep == 6) View.GONE else View.VISIBLE
+        val previousColor = if (currentStep == 1)
+            getColor(R.color.pride_btn_inactive)
+        else
+            getColor(R.color.pride_btn_active)
+        binding.btnPrevious.setTextColor(previousColor)
+        binding.btnPrevious.compoundDrawableTintList = ColorStateList.valueOf(previousColor)
+        updateStartOverButton()
+    }
+
+    private fun updateStartOverButton() {
+        val hasImage = selectedImageBitmap != null || currentStep > 1
+        val color = if (hasImage)
+            getColor(R.color.pride_btn_active)
+        else
+            getColor(R.color.pride_btn_inactive)
+        binding.btnStartOver.setTextColor(color)
+        binding.btnStartOver.compoundDrawableTintList = ColorStateList.valueOf(color)
+        binding.btnStartOver.isEnabled = hasImage
+    }
+
+    // ==================== Step 1: Choose Image ====================
+
+    private fun loadImage(uri: Uri) {
+        try {
+            val inputStream = contentResolver.openInputStream(uri)
+            selectedImageBitmap = BitmapFactory.decodeStream(inputStream)
+            inputStream?.close()
+            binding.imgSelectedPreview.setImageBitmap(selectedImageBitmap)
+            binding.emptyUploadState.gone()
+            binding.loadedImageState.visible()
+            binding.btnClearImage.visible()
+            binding.btnChangeImage.visible()
+            binding.errorNoImage.gone()
+            updateStartOverButton()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun clearSelectedImage() {
+        selectedImageBitmap = null
+        binding.emptyUploadState.visible()
+        binding.loadedImageState.gone()
+        binding.btnClearImage.gone()
+        binding.btnChangeImage.gone()
+        binding.errorNoImage.gone()
+        updateStartOverButton()
+    }
+
+    // ==================== Step 2: Crop ====================
+
+    private fun performCrop() {
+        val bytes = binding.cropView.getCroppedImage()
+        if (bytes != null) {
+            croppedBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        } else {
+            croppedBitmap = selectedImageBitmap
+        }
+    }
+
+
+    // ==================== Step 3: Choose Flags ====================
+
+    private fun setupFlagAdapter() {
+        flagAdapter = PrideFlagAdapter(this) { flag ->
+            if (flag.isSelected) {
+                flag.isSelected = false
+                selectedFlags.remove(flag)
+            } else {
+                if (selectedFlags.size < 4) {
+                    flag.isSelected = true
+                    selectedFlags.add(flag)
+                }
+            }
+            val maxReached = selectedFlags.size >= 4
+            flagAdapter.setMaxReached(maxReached)
+            chipAdapter.submitList(selectedFlags.toList())
+            binding.selectedFlagsBar.visibility =
+                if (selectedFlags.isNotEmpty()) View.VISIBLE else View.GONE
+            flagAdapter.submitList(allFlags.toList())
+        }
+        binding.rvFlags.apply {
+            layoutManager = GridLayoutManager(this@PrideActivity, 3)
+            adapter = flagAdapter
+        }
+        flagAdapter.submitList(allFlags.toList())
+    }
+
+    private fun setupChipAdapter() {
+        chipAdapter = SelectedFlagChipAdapter { flag ->
+            flag.isSelected = false
+            selectedFlags.remove(flag)
+            flagAdapter.setMaxReached(selectedFlags.size >= 4)
+            chipAdapter.submitList(selectedFlags.toList())
+            binding.selectedFlagsBar.visibility =
+                if (selectedFlags.isNotEmpty()) View.VISIBLE else View.GONE
+            flagAdapter.submitList(allFlags.toList())
+        }
+        binding.rvSelectedChips.apply {
+            layoutManager = LinearLayoutManager(this@PrideActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = chipAdapter
+        }
+    }
+
+    private fun openCreateCustomFlagDialog() {
+        val dialog = CreateCustomFlagDialog(this)
+        dialog.show()
+        dialog.onCloseEvent = { dialog.dismiss() }
+        dialog.onCreateEvent = { customFlag ->
+            dialog.dismiss()
+            customFlags.add(customFlag)
+            // Add custom flag as a selectable item
+            val newFlag = PrideFlagModel(
+                id = 100 + customFlags.size,
+                name = customFlag.name,
+                assetPath = "",
+                isSelected = false
+            )
+            allFlags.add(0, newFlag)
+            flagAdapter.submitList(allFlags.toList())
+        }
+    }
+
+    // ==================== Step 4: Layout Style ====================
+
+    private fun selectLayoutOption(style: LayoutStyle) {
+        selectedLayout = style
+        binding.optionCircle.setBackgroundResource(
+            if (style == LayoutStyle.CIRCLE) R.drawable.bg_pride_layout_option_selected
+            else R.drawable.bg_pride_layout_option
+        )
+        binding.optionSquare.setBackgroundResource(
+            if (style == LayoutStyle.SQUARE) R.drawable.bg_pride_layout_option_selected
+            else R.drawable.bg_pride_layout_option
+        )
+        binding.optionBackground.setBackgroundResource(
+            if (style == LayoutStyle.BACKGROUND) R.drawable.bg_pride_layout_option_selected
+            else R.drawable.bg_pride_layout_option
+        )
+    }
+
+    // ==================== Step 5: Design Style ====================
+
+    private fun generatePreviewBitmap() {
+        val preview = generateFinalBitmap(previewSize = 400)
+        binding.imgPreview.setImageBitmap(preview)
+    }
+
+    private fun updatePreview() {
+        val preview = generateFinalBitmap(previewSize = 400)
+        binding.imgPreview.setImageBitmap(preview)
+    }
+
+    // ==================== Rendering ====================
+
+    private fun generateFinalBitmap(previewSize: Int = 800): Bitmap {
+        val source = croppedBitmap ?: selectedImageBitmap
+            ?: Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888)
+
+        val size = previewSize
+        val flagBitmap = buildFlagBitmap(size, size)
+
+        return when (selectedLayout) {
+            LayoutStyle.CIRCLE -> renderCircle(source, flagBitmap, size)
+            LayoutStyle.SQUARE -> renderSquare(source, flagBitmap, size)
+            LayoutStyle.BACKGROUND -> renderBackground(source, flagBitmap, size)
+        }
+    }
+
+    private fun buildFlagBitmap(width: Int, height: Int): Bitmap {
+        val result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(result)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        val flags = if (selectedFlags.isNotEmpty()) selectedFlags else
+            listOf(PrideFlagModel(1, "Default", "flag/1.jpg"))
+
+        val partWidth = width.toFloat() / flags.size
+
+        flags.forEachIndexed { index, flag ->
+            if (flag.assetPath.isNotEmpty()) {
+                try {
+                    val stream = assets.open(flag.assetPath)
+                    val flagBmp = BitmapFactory.decodeStream(stream)
+                    stream.close()
+                    val dst = RectF(
+                        index * partWidth, 0f,
+                        (index + 1) * partWidth, height.toFloat()
+                    )
+                    canvas.drawBitmap(flagBmp, null, dst, paint)
+                    flagBmp.recycle()
+                } catch (e: Exception) {
+                    // Custom flag - find in customFlags and draw colors
+                    val customFlag = customFlags.find { it.name == flag.name }
+                    if (customFlag != null) {
+                        drawCustomFlagSlice(canvas, customFlag, index * partWidth, 0f,
+                            (index + 1) * partWidth, height.toFloat())
+                    }
+                }
+            } else {
+                // Custom flag
+                val customFlag = customFlags.find { it.name == flag.name }
+                if (customFlag != null) {
+                    drawCustomFlagSlice(canvas, customFlag, index * partWidth, 0f,
+                        (index + 1) * partWidth, height.toFloat())
+                }
+            }
+        }
+        return result
+    }
+
+    private fun drawCustomFlagSlice(
+        canvas: Canvas, flag: CustomFlagModel,
+        left: Float, top: Float, right: Float, bottom: Float
+    ) {
+        val paint = Paint()
+        val sliceHeight = (bottom - top) / flag.colors.size
+        flag.colors.forEachIndexed { i, color ->
+            paint.color = color
+            canvas.drawRect(left, top + i * sliceHeight, right, top + (i + 1) * sliceHeight, paint)
+        }
+    }
+
+    private fun renderCircle(source: Bitmap, flagBitmap: Bitmap, size: Int): Bitmap {
+        val result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(result)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        // Draw full circle clipped flag as background
+        val path = Path()
+        path.addCircle(size / 2f, size / 2f, size / 2f, Path.Direction.CW)
+        canvas.save()
+        canvas.clipPath(path)
+        canvas.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
+        canvas.restore()
+
+        if (flagModeRing) {
+            // Draw user image in center circle
+            val ringThickness = size * (0.1f + ringScale * 0.3f)
+            val innerRadius = size / 2f - ringThickness
+            val cx = size / 2f
+            val cy = size / 2f
+
+            val innerPath = Path()
+            innerPath.addCircle(cx, cy, innerRadius, Path.Direction.CW)
+            canvas.save()
+            canvas.clipPath(innerPath)
+
+            val zoom = 0.5f + imageZoom * 0.8f
+            val scaledSize = (innerRadius * 2 * zoom).toInt().coerceAtLeast(1)
+            val scaledUser = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
+            val offsetX = cx - scaledSize / 2f
+            val offsetY = cy - scaledSize / 2f
+            canvas.drawBitmap(scaledUser, offsetX, offsetY, paint)
+            canvas.restore()
+        }
+
+        return result
+    }
+
+    private fun renderSquare(source: Bitmap, flagBitmap: Bitmap, size: Int): Bitmap {
+        val result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(result)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        // Draw flag as background
+        canvas.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
+
+        if (flagModeRing) {
+            // Draw user image in center square
+            val ringThickness = size * (0.05f + ringScale * 0.2f)
+            val innerSize = size - ringThickness * 2
+
+            val zoom = 0.5f + imageZoom * 0.8f
+            val scaledSize = (innerSize * zoom).toInt().coerceAtLeast(1)
+            val scaledUser = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
+            val offsetX = (size - scaledSize) / 2f
+            val offsetY = (size - scaledSize) / 2f
+            canvas.drawBitmap(scaledUser, offsetX, offsetY, paint)
+        }
+
+        return result
+    }
+
+    private fun renderBackground(source: Bitmap, flagBitmap: Bitmap, size: Int): Bitmap {
+        val result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(result)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        // Draw flag as full background
+        canvas.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
+
+        // Draw user image centered on top with rounded corners
+        val zoom = 0.3f + imageZoom * 0.7f
+        val scaledSize = (size * zoom).toInt().coerceAtLeast(1)
+        val scaledUser = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
+        val offsetX = (size - scaledSize) / 2f
+        val offsetY = (size - scaledSize) / 2f
+        val radius = scaledSize * 0.12f
+
+        canvas.save()
+        val clipPath = Path().apply {
+            addRoundRect(
+                RectF(offsetX, offsetY, offsetX + scaledSize, offsetY + scaledSize),
+                radius, radius,
+                Path.Direction.CW
+            )
+        }
+        canvas.clipPath(clipPath)
+        canvas.drawBitmap(scaledUser, offsetX, offsetY, paint)
+        canvas.restore()
+
+        return result
+    }
+
+    // ==================== Step 6: Result ====================
+
+    private fun downloadResult() {
+        resultBitmap?.let { bitmap ->
+            lifecycleScope.launch {
+                showLoading()
+                MediaHelper.saveBitmapToExternal(this@PrideActivity, bitmap).collect { state ->
+                    when (state) {
+                        com.pfp.pride.core.utils.state.HandleState.SUCCESS -> {
+                            dismissLoading()
+                            showToast(R.string.download_success)
+                        }
+                        com.pfp.pride.core.utils.state.HandleState.FAIL -> {
+                            dismissLoading()
+                            showToast(R.string.download_failed_please_try_again_later)
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleBackLeftToRight() {
+        finish()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+}

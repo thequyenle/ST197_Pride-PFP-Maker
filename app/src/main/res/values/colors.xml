@@ -45,4 +45,7 @@
     <color name="native_text_color_black">#000000</color>
     <color name="dark">#000000</color>
     <color name="purple_text">#470092</color>
+
+    <color name="pride_btn_inactive">#B3B3B3</color>
+    <color name="pride_btn_active">#4391D3</color>
 </resources>

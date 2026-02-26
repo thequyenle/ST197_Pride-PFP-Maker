@@ -131,4 +131,46 @@
     <string name="trending_tv">Pride PFP Trending</string>
     <string name="pride_pfp_overlay">Pride PFP Overlay</string>
     <string name="generate">Generate Random</string>
+
+    <!-- Pride PFP Overlay flow -->
+    <string name="pride_choose_image">Choose Image</string>
+    <string name="pride_crop_image">Crop Image</string>
+    <string name="pride_choose_flags">Choose Your Pride Flags</string>
+    <string name="pride_choose_layout">Choose Layout Style</string>
+    <string name="pride_choose_design">Choose Design Style</string>
+    <string name="pride_result_title">Your Pride Profile Picture Is Ready</string>
+    <string name="pride_result_subtitle">Show your Pride with your personalized profile picture</string>
+    <string name="pride_choose_image_hint">Choose an image to edit</string>
+    <string name="pride_no_image_uploaded">No image uploaded</string>
+    <string name="pride_click_to_select_different">Click to select a different image</string>
+    <string name="pride_select_up_to_4">Select up to 4 flags to add to your profile picture</string>
+    <string name="pride_selected_flags">Selected Flags</string>
+    <string name="pride_my_custom">My Custom Flag</string>
+    <string name="pride_flags_section">Pride\'s Flag</string>
+    <string name="pride_layout_subtitle">Select how the flags should be positioned on your image</string>
+    <string name="pride_layout_circle">Circle</string>
+    <string name="pride_layout_circle_desc">Apply flag as a circular border around the image</string>
+    <string name="pride_layout_square">Square</string>
+    <string name="pride_layout_square_desc">Apply flag as a square border around the image</string>
+    <string name="pride_layout_background">Background</string>
+    <string name="pride_layout_background_desc">Blend transparency in the original image with the flag</string>
+    <string name="pride_design_subtitle">Select the visual style for your Pride flags</string>
+    <string name="pride_image_zoom">Image Zoom</string>
+    <string name="pride_ring_scale">Ring Scale</string>
+    <string name="pride_default_zoom">Default Image Zoom</string>
+    <string name="pride_default_ring">Default Ring Scale</string>
+    <string name="pride_center_image">Center Image Position</string>
+    <string name="pride_flag_mode_ring">Flag Mode: Ring</string>
+    <string name="pride_previous"> Previous</string>
+    <string name="pride_start_over">Start Over</string>
+    <string name="pride_continue">Continue</string>
+    <string name="pride_create_another">Create Another</string>
+    <string name="pride_my_work">My Work</string>
+    <string name="pride_center">Center</string>
+    <string name="pride_create_custom_flag">Create Custom Flag</string>
+    <string name="pride_flag_name">Flag Name</string>
+    <string name="pride_enter_name">Enter Name</string>
+    <string name="pride_colors">Colors</string>
+    <string name="pride_create">Create</string>
+    <string name="pride_select_at_least_one">Please select at least one flag</string>
 </resources>

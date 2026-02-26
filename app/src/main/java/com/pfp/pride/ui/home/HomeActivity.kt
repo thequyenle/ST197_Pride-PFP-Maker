@@ -58,6 +58,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             btnMyWork.tap(800) { showInterAll { startIntentRightToLeft(MyCreationActivity::class.java) } }
            btnRandomAll.tap(800) { showInterAll {startIntentRightToLeft(RandomCharacterActivity::class.java) }}
             btnTrending.tap(800) {  startIntentRightToLeft(TrendingActivity::class.java)}
+            btnOverlay.tap(800) { startIntentRightToLeft(com.pfp.pride.ui.pride.PrideActivity::class.java) }
 
         }
     }
