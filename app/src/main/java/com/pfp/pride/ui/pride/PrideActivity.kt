@@ -11,8 +11,10 @@ import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
+import com.pfp.pride.core.custom.drawview.PreviewView
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,8 +38,12 @@ import com.pfp.pride.ui.pride.adapter.SelectedFlagChipAdapter
 import com.pfp.pride.core.extensions.startIntentRightToLeft
 import com.pfp.pride.core.utils.key.IntentKey
 import com.pfp.pride.core.utils.key.ValueKey
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PrideActivity : BaseActivity<ActivityPrideBinding>() {
 
@@ -52,6 +58,12 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
     private var ringScale = 0.3f
     private var flagModeRing = true
     private var resultBitmap: Bitmap? = null
+    private var imageOffsetX = 0f
+    private var imageOffsetY = 0f
+    private var lastTouchX = 0f
+    private var lastTouchY = 0f
+    private var previewJob: Job? = null
+    private var cachedFlagBitmap: Bitmap? = null
 
     private val allFlags = PrideFlagData.getFlags().toMutableList()
     private val selectedFlags = mutableListOf<PrideFlagModel>()
@@ -121,7 +133,39 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
                 ringScale = 0.3f
                 updatePreview()
             }
-            btnCenterImage.tap { updatePreview() }
+            btnCenterImage.tap {
+                imageOffsetX = 0f
+                imageOffsetY = 0f
+                imgPreview.resetOffset()
+            }
+            imgPreview.setOnTouchListener { view, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        lastTouchX = event.x
+                        lastTouchY = event.y
+                        view.parent.requestDisallowInterceptTouchEvent(true)
+                        true
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        val dx = event.x - lastTouchX
+                        val dy = event.y - lastTouchY
+                        lastTouchX = event.x
+                        lastTouchY = event.y
+                        imgPreview.userOffsetX += dx
+                        imgPreview.userOffsetY += dy
+                        imgPreview.invalidate()
+                        val scale = 400f / view.width
+                        imageOffsetX += dx * scale
+                        imageOffsetY += dy * scale
+                        true
+                    }
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        view.parent.requestDisallowInterceptTouchEvent(false)
+                        true
+                    }
+                    else -> false
+                }
+            }
             switchFlagMode.tap {
                 flagModeRing = !flagModeRing
                 switchFlagMode.setImageResource(
@@ -172,6 +216,8 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         }
         if (currentStep < totalSteps) {
             if (currentStep == 4) {
+                imageOffsetX = 0f
+                imageOffsetY = 0f
                 generatePreviewBitmap()
             }
             if (currentStep == 5) {
@@ -219,6 +265,9 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         ringScale = 0.3f
         flagModeRing = true
         resultBitmap = null
+        imageOffsetX = 0f
+        imageOffsetY = 0f
+        cachedFlagBitmap = null
         binding.seekImageZoom.progress = 50
         binding.seekRingScale.progress = 30
         binding.switchFlagMode.setImageResource(R.drawable.ic_sw_on)
@@ -343,6 +392,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
 
     private fun setupFlagAdapter() {
         val onFlagClick: (PrideFlagModel) -> Unit = { flag ->
+            cachedFlagBitmap = null
             if (flag.isSelected) {
                 flag.isSelected = false
                 selectedFlags.remove(flag)
@@ -379,6 +429,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
 
     private fun setupChipAdapter() {
         chipAdapter = SelectedFlagChipAdapter { flag ->
+            cachedFlagBitmap = null
             flag.isSelected = false
             selectedFlags.remove(flag)
             val maxReached = selectedFlags.size >= 4
@@ -436,13 +487,80 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
     // ==================== Step 5: Design Style ====================
 
     private fun generatePreviewBitmap() {
-        val preview = generateFinalBitmap(previewSize = 400)
-        binding.imgPreview.setImageBitmap(preview)
+        updatePreview()
     }
 
     private fun updatePreview() {
-        val preview = generateFinalBitmap(previewSize = 400)
-        binding.imgPreview.setImageBitmap(preview)
+        previewJob?.cancel()
+        previewJob = lifecycleScope.launch {
+            val source = croppedBitmap ?: selectedImageBitmap ?: return@launch
+            val (baseBmp, userBmp, clipR) = withContext(Dispatchers.Default) {
+                val flagBmp = buildFlagBitmap(400, 400)
+                val base = buildBaseLayer(flagBmp, 400)
+                val user = if (flagModeRing) buildUserLayer(source, 400) else null
+                Triple(base, user?.first, user?.second ?: 0f)
+            }
+            if (!isActive) return@launch
+            binding.imgPreview.baseBitmap = baseBmp
+            binding.imgPreview.userBitmap = userBmp
+            binding.imgPreview.clipRadius = clipR
+            val vw = binding.imgPreview.width.toFloat().takeIf { it > 0f } ?: 400f
+            binding.imgPreview.userOffsetX = imageOffsetX * (vw / 400f)
+            binding.imgPreview.userOffsetY = imageOffsetY * (vw / 400f)
+            binding.imgPreview.invalidate()
+        }
+    }
+
+    private fun buildBaseLayer(flagBitmap: Bitmap, size: Int): Bitmap {
+        val result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(result)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        return when (selectedLayout) {
+            LayoutStyle.CIRCLE -> {
+                val path = Path()
+                path.addCircle(size / 2f, size / 2f, size / 2f, Path.Direction.CW)
+                canvas.save()
+                canvas.clipPath(path)
+                canvas.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
+                canvas.restore()
+                result
+            }
+            LayoutStyle.SQUARE, LayoutStyle.BACKGROUND -> {
+                canvas.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
+                result
+            }
+        }
+    }
+
+    private fun buildUserLayer(source: Bitmap, size: Int): Pair<Bitmap, Float> {
+        return when (selectedLayout) {
+            LayoutStyle.CIRCLE -> {
+                val ringThickness = size * (0.1f + ringScale * 0.3f)
+                val innerRadius = size / 2f - ringThickness
+                val scaledSize = ((innerRadius * 2) * (0.5f + imageZoom * 0.8f)).toInt().coerceAtLeast(1)
+                Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true) to innerRadius
+            }
+            LayoutStyle.SQUARE -> {
+                val ringThickness = size * (0.05f + ringScale * 0.2f)
+                val innerSize = size - ringThickness * 2
+                val scaledSize = (innerSize * (0.5f + imageZoom * 0.8f)).toInt().coerceAtLeast(1)
+                Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true) to 0f
+            }
+            LayoutStyle.BACKGROUND -> {
+                val scaledSize = (size * (0.3f + imageZoom * 0.7f)).toInt().coerceAtLeast(1)
+                val scaled = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
+                val rounded = Bitmap.createBitmap(scaledSize, scaledSize, Bitmap.Config.ARGB_8888)
+                val c = Canvas(rounded)
+                val p = Paint(Paint.ANTI_ALIAS_FLAG)
+                val radius = scaledSize * 0.12f
+                val path = Path()
+                path.addRoundRect(RectF(0f, 0f, scaledSize.toFloat(), scaledSize.toFloat()), radius, radius, Path.Direction.CW)
+                c.clipPath(path)
+                c.drawBitmap(scaled, 0f, 0f, p)
+                scaled.recycle()
+                rounded to 0f
+            }
+        }
     }
 
     // ==================== Rendering ====================
@@ -462,6 +580,9 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
     }
 
     private fun buildFlagBitmap(width: Int, height: Int): Bitmap {
+        if (width == 400 && height == 400) {
+            cachedFlagBitmap?.let { return it }
+        }
         val result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(result)
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -500,6 +621,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
                 }
             }
         }
+        if (width == 400 && height == 400) cachedFlagBitmap = result
         return result
     }
 
@@ -543,8 +665,9 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             val zoom = 0.5f + imageZoom * 0.8f
             val scaledSize = (innerRadius * 2 * zoom).toInt().coerceAtLeast(1)
             val scaledUser = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
-            val offsetX = cx - scaledSize / 2f
-            val offsetY = cy - scaledSize / 2f
+            val scaleFactor = size / 400f
+            val offsetX = cx - scaledSize / 2f + imageOffsetX * scaleFactor
+            val offsetY = cy - scaledSize / 2f + imageOffsetY * scaleFactor
             canvas.drawBitmap(scaledUser, offsetX, offsetY, paint)
             canvas.restore()
         }
@@ -568,8 +691,9 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             val zoom = 0.5f + imageZoom * 0.8f
             val scaledSize = (innerSize * zoom).toInt().coerceAtLeast(1)
             val scaledUser = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
-            val offsetX = (size - scaledSize) / 2f
-            val offsetY = (size - scaledSize) / 2f
+            val scaleFactor = size / 400f
+            val offsetX = (size - scaledSize) / 2f + imageOffsetX * scaleFactor
+            val offsetY = (size - scaledSize) / 2f + imageOffsetY * scaleFactor
             canvas.drawBitmap(scaledUser, offsetX, offsetY, paint)
         }
 
@@ -588,8 +712,9 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         val zoom = 0.3f + imageZoom * 0.7f
         val scaledSize = (size * zoom).toInt().coerceAtLeast(1)
         val scaledUser = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
-        val offsetX = (size - scaledSize) / 2f
-        val offsetY = (size - scaledSize) / 2f
+        val scaleFactor = size / 400f
+        val offsetX = (size - scaledSize) / 2f + imageOffsetX * scaleFactor
+        val offsetY = (size - scaledSize) / 2f + imageOffsetY * scaleFactor
         val radius = scaledSize * 0.12f
 
         canvas.save()
