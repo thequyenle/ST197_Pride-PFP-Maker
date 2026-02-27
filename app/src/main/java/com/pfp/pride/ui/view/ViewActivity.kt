@@ -78,7 +78,7 @@ class ViewActivity : BaseActivity<ActivityViewBinding>() {
                 setImageActionBar(btnActionBarRight, R.drawable.ic_edit_view)
 
                 // Hide edit icon when coming from design section
-                if (viewModel.statusFrom == ValueKey.MY_DESIGN_TYPE) {
+                if (viewModel.statusFrom == ValueKey.MY_DESIGN_TYPE||viewModel.statusFrom == ValueKey.PRIDE_OVERLAY_TYPE) {
                     btnActionBarRight.invisible()
                 }
 

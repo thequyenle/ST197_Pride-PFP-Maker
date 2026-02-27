@@ -36,6 +36,7 @@ class CropView : AppCompatImageView {
     private val TOP = 2
     private val RIGHT = 3
     private val BOTTOM = 4
+    private var activeSide = -1
 
     private var imageScaledWidth = 0
     private var imageScaledHeight = 0
@@ -67,8 +68,13 @@ class CropView : AppCompatImageView {
 
     @SuppressLint("ClickableViewAccessibility") override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> previous!!.set(event.x.toInt(), event.y.toInt())
-            MotionEvent.ACTION_MOVE -> if (isActionInsideRectangle(event.x, event.y)) {
+            MotionEvent.ACTION_DOWN -> {
+                previous!!.set(event.x.toInt(), event.y.toInt())
+                activeSide = if (isActionInsideRectangle(event.x, event.y))
+                    getAffectedSide(event.x, event.y)
+                else -1
+            }
+            MotionEvent.ACTION_MOVE -> if (activeSide != -1) {
                 prevRect.set(cropRect)
                 adjustRectangle(event.x.toInt(), event.y.toInt())
                 val pad = 10f
@@ -80,7 +86,10 @@ class CropView : AppCompatImageView {
                 )
                 previous!!.set(event.x.toInt(), event.y.toInt())
             }
-            MotionEvent.ACTION_UP -> previous = Point()
+            MotionEvent.ACTION_UP -> {
+                previous = Point()
+                activeSide = -1
+            }
         }
         return true
     }
@@ -131,7 +140,7 @@ class CropView : AppCompatImageView {
     }
 
     private fun adjustRectangle(x: Int, y: Int) {
-        when (getAffectedSide(x.toFloat(), y.toFloat())) {
+        when (activeSide) {
             LEFT -> {
                 val movement = x - leftTop!!.x
                 val newX = leftTop!!.x + movement
