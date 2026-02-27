@@ -644,19 +644,19 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
         confirmExit()
     }
 
-    fun initNativeCollab() {
-        Admob.getInstance().loadNativeCollapNotBanner(this,getString(R.string.native_cl_custom),
-            binding.flNativeCollab
-        )
-    }
-
-    override fun initAds() {
-        initNativeCollab()
-    }
+//    fun initNativeCollab() {
+//        Admob.getInstance().loadNativeCollapNotBanner(this,getString(R.string.native_cl_custom),
+//            binding.flNativeCollab
+//        )
+//    }
+//
+//    override fun initAds() {
+//        initNativeCollab()
+//    }
 
     override fun onRestart() {
         super.onRestart()
-        initNativeCollab()
+       // initNativeCollab()
 
     }
 

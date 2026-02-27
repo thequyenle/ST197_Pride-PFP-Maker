@@ -169,16 +169,16 @@ class SuccessActivity : BaseActivity<ActivitySuccessBinding>() {
         }
     }
 
-    override fun initAds() {
-        initNativeCollab()
-    }
-
-    fun initNativeCollab() {
-
-        loadNativeCollabAds(R.string.native_cl_success, binding.flNativeCollab)
-
-
-    }
+//    override fun initAds() {
+//        initNativeCollab()
+//    }
+//
+//    fun initNativeCollab() {
+//
+//        loadNativeCollabAds(R.string.native_cl_success, binding.flNativeCollab)
+//
+//
+//    }
 
     @android.annotation.SuppressLint("MissingSuperCall")
     override fun onBackPressed() {

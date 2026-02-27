@@ -280,16 +280,16 @@ class ViewActivity : BaseActivity<ActivityViewBinding>() {
         }
     }
 
-    override fun initAds() {
-        initNativeCollab()
-    }
-
-    fun initNativeCollab() {
-
-        loadNativeCollabAds(R.string.native_cl_detail, binding.flNativeCollab)
-
-
-    }
+//    override fun initAds() {
+//        initNativeCollab()
+//    }
+//
+//    fun initNativeCollab() {
+//
+//        loadNativeCollabAds(R.string.native_cl_detail, binding.flNativeCollab)
+//
+//
+//    }
 
     @android.annotation.SuppressLint("MissingSuperCall")
     override fun onBackPressed() {

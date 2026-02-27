@@ -9,7 +9,9 @@ import com.lvt.ads.callback.InterCallback
 import com.lvt.ads.util.Admob
 import com.pfp.pride.R
 import com.pfp.pride.core.base.BaseActivity
+import com.pfp.pride.core.extensions.checkShowSplashWhenFail
 import com.pfp.pride.core.extensions.loadNativeCollabAds
+import com.pfp.pride.core.extensions.loadSplashInterAds
 import com.pfp.pride.core.utils.state.HandleState
 import com.pfp.pride.databinding.ActivitySplashBinding
 import com.pfp.pride.ui.intro.IntroActivity
@@ -88,13 +90,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
       lifecycleScope.launch { delay(7000) }
 
-        Admob.getInstance().loadSplashInterAds(
-            this@SplashActivity,
-            getString(R.string.inter_splash),
-            30000,
-            2000,
-            interCallBack
-        )
+        loadSplashInterAds(getString(R.string.inter_splash), 30000, 2000, interCallBack)
     }
 
     override fun viewListener() {
@@ -120,7 +116,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun onResume() {
         super.onResume()
-        Admob.getInstance().onCheckShowSplashWhenFail(this, interCallBack, 1000)
+        checkShowSplashWhenFail(interCallBack, 1000)
     }
 
     override fun shouldPlayBackgroundMusic(): Boolean = false

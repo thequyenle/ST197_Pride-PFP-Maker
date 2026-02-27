@@ -34,6 +34,8 @@ import com.pfp.pride.ui.my_creation.MyCreationActivity
 import com.pfp.pride.ui.pride.adapter.PrideFlagAdapter
 import com.pfp.pride.ui.pride.adapter.SelectedFlagChipAdapter
 import com.pfp.pride.core.extensions.startIntentRightToLeft
+import com.pfp.pride.core.utils.key.IntentKey
+import com.pfp.pride.core.utils.key.ValueKey
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -131,7 +133,9 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             // Step 6 buttons
             btnDownload.tap { downloadResult() }
             btnCreateAnother.tap { resetToStep1() }
-            btnMyWork.tap { startIntentRightToLeft(MyCreationActivity::class.java) }
+            btnMyWork.tap {
+                startIntentRightToLeft(MyCreationActivity::class.java, IntentKey.TAB_KEY, ValueKey.PRIDE_OVERLAY_TYPE)
+            }
 
             // Bottom nav
             btnPrevious.tap { goToPreviousStep() }
@@ -173,6 +177,16 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             if (currentStep == 5) {
                 resultBitmap = generateFinalBitmap()
                 binding.imgResult.setImageBitmap(resultBitmap)
+                // Auto-save to internal PRIDE_ALBUM for My Work tab 3
+                resultBitmap?.let { bmp ->
+                    lifecycleScope.launch {
+                        MediaHelper.saveBitmapToInternalStorage(
+                            this@PrideActivity,
+                            ValueKey.PRIDE_ALBUM,
+                            bmp.copy(bmp.config ?: Bitmap.Config.ARGB_8888, false)
+                        ).collect {}
+                    }
+                }
             }
             currentStep++
             updateStep()

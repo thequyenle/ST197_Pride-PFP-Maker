@@ -23,6 +23,9 @@ object ValueKey {
 
     const val AVATAR_TYPE = 0
     const val MY_DESIGN_TYPE = 1
+    const val PRIDE_OVERLAY_TYPE = 2
+
+    const val PRIDE_ALBUM = "pride_overlay"
 
     const val RANDOM_IDENTIFIER_FOR_ADDING_STICKER_TO_WHATSAPP =
         "RANDOM_IDENTIFIER_FOR_WHATSAPP_STICKER"

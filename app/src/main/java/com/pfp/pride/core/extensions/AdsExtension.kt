@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.nativead.NativeAd
 import com.lvt.ads.callback.InterCallback
 import com.lvt.ads.callback.NativeCallback
@@ -124,6 +125,16 @@ fun Activity.loadNativeCollabAds(
         }
 
     })
+}
+
+fun AppCompatActivity.loadSplashInterAds(id: String, timeOut: Long, timeDelay: Long, interCallback: InterCallback?) {
+    if (!SHOW_ADS) { interCallback?.onNextAction(); return }
+    Admob.getInstance().loadSplashInterAds(this, id, timeOut, timeDelay, interCallback)
+}
+
+fun AppCompatActivity.checkShowSplashWhenFail(interCallback: InterCallback?, delay: Int) {
+    if (!SHOW_ADS) return
+    Admob.getInstance().onCheckShowSplashWhenFail(this, interCallback, delay)
 }
 
 fun Activity.logEvent(nameEvent: String){
