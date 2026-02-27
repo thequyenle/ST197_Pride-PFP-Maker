@@ -82,7 +82,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
 
             // Step 2 crop buttons
             btnCropReset.tap { cropView.resetPoints() }
-            btnCropCenter.tap { cropView.resetPoints() }
+            btnCropCenter.tap { cropView.centerPoints() }
 
             // Step 3 custom flag
             btnAddCustomFlag.tap { openCreateCustomFlagDialog() }

@@ -27,6 +27,9 @@ class CropView : AppCompatImageView {
     private var rightBottom: Point? = null
     private var center: Point? = null
     private var previous: Point? = null
+    private val cropRect = RectF()
+    private val prevRect = RectF()
+    private var cornerRadius = 0f
 
     private val DRAG = 0
     private val LEFT = 1
@@ -50,22 +53,31 @@ class CropView : AppCompatImageView {
         initCropView()
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        cornerRadius = 12f * resources.displayMetrics.density
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (leftTop!!.equals(0, 0)) resetPoints()
-        val radius = 12f * resources.displayMetrics.density
-        canvas.drawRoundRect(
-            RectF(leftTop!!.x.toFloat(), leftTop!!.y.toFloat(), rightBottom!!.x.toFloat(), rightBottom!!.y.toFloat()),
-            radius, radius, paint
-        )
+        cropRect.set(leftTop!!.x.toFloat(), leftTop!!.y.toFloat(), rightBottom!!.x.toFloat(), rightBottom!!.y.toFloat())
+        canvas.drawRoundRect(cropRect, cornerRadius, cornerRadius, paint)
     }
 
     @SuppressLint("ClickableViewAccessibility") override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> previous!!.set(event.x.toInt(), event.y.toInt())
             MotionEvent.ACTION_MOVE -> if (isActionInsideRectangle(event.x, event.y)) {
+                prevRect.set(cropRect)
                 adjustRectangle(event.x.toInt(), event.y.toInt())
-                invalidate() // redraw rectangle
+                val pad = 10f
+                invalidate(
+                    (minOf(prevRect.left, leftTop!!.x.toFloat()) - pad).toInt(),
+                    (minOf(prevRect.top, leftTop!!.y.toFloat()) - pad).toInt(),
+                    (maxOf(prevRect.right, rightBottom!!.x.toFloat()) + pad).toInt(),
+                    (maxOf(prevRect.bottom, rightBottom!!.y.toFloat()) + pad).toInt()
+                )
                 previous!!.set(event.x.toInt(), event.y.toInt())
             }
             MotionEvent.ACTION_UP -> previous = Point()
@@ -74,10 +86,12 @@ class CropView : AppCompatImageView {
     }
 
     private fun initCropView() {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
         paint.color = Color.BLACK
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 3f
         paint.pathEffect = DashPathEffect(floatArrayOf(16f, 10f), 0f)
+        paint.isAntiAlias = false
         leftTop = Point()
         rightBottom = Point()
         center = Point()
@@ -88,6 +102,16 @@ class CropView : AppCompatImageView {
         center!!.set(width / 2, height / 2)
         leftTop!![(width - initial_size) / 2] = (height - initial_size) / 2
         rightBottom!!.set(leftTop!!.x + initial_size, leftTop!!.y + initial_size)
+        invalidate()
+    }
+
+    fun centerPoints() {
+        val currentW = rightBottom!!.x - leftTop!!.x
+        val currentH = rightBottom!!.y - leftTop!!.y
+        center!!.set(width / 2, height / 2)
+        leftTop!!.set((width - currentW) / 2, (height - currentH) / 2)
+        rightBottom!!.set(leftTop!!.x + currentW, leftTop!!.y + currentH)
+        invalidate()
     }
 
     private fun isActionInsideRectangle(x: Float, y: Float): Boolean {
@@ -107,33 +131,53 @@ class CropView : AppCompatImageView {
     }
 
     private fun adjustRectangle(x: Int, y: Int) {
-        val movement: Int
         when (getAffectedSide(x.toFloat(), y.toFloat())) {
             LEFT -> {
-                movement = x - leftTop!!.x
-                if (isInImageRange(PointF((leftTop!!.x + movement).toFloat(), (leftTop!!.y + movement).toFloat()))) leftTop!![leftTop!!.x + movement] = leftTop!!.y + movement
+                val movement = x - leftTop!!.x
+                val newX = leftTop!!.x + movement
+                val newY = leftTop!!.y + movement
+                if (newX < rightBottom!!.x && isInViewBounds(newX, newY)) {
+                    leftTop!!.set(newX, newY)
+                }
             }
             TOP -> {
-                movement = y - leftTop!!.y
-                if (isInImageRange(PointF((leftTop!!.x + movement).toFloat(), (leftTop!!.y + movement).toFloat()))) leftTop!![leftTop!!.x + movement] = leftTop!!.y + movement
+                val movement = y - leftTop!!.y
+                val newX = leftTop!!.x + movement
+                val newY = leftTop!!.y + movement
+                if (newY < rightBottom!!.y && isInViewBounds(newX, newY)) {
+                    leftTop!!.set(newX, newY)
+                }
             }
             RIGHT -> {
-                movement = x - rightBottom!!.x
-                if (isInImageRange(PointF((rightBottom!!.x + movement).toFloat(), (rightBottom!!.y + movement).toFloat()))) rightBottom!!.set(rightBottom!!.x + movement, rightBottom!!.y + movement)
+                val movement = x - rightBottom!!.x
+                val newX = rightBottom!!.x + movement
+                val newY = rightBottom!!.y + movement
+                if (newX > leftTop!!.x && isInViewBounds(newX, newY)) {
+                    rightBottom!!.set(newX, newY)
+                }
             }
             BOTTOM -> {
-                movement = y - rightBottom!!.y
-                if (isInImageRange(PointF((rightBottom!!.x + movement).toFloat(), (rightBottom!!.y + movement).toFloat()))) rightBottom!!.set(rightBottom!!.x + movement, rightBottom!!.y + movement)
+                val movement = y - rightBottom!!.y
+                val newX = rightBottom!!.x + movement
+                val newY = rightBottom!!.y + movement
+                if (newY > leftTop!!.y && isInViewBounds(newX, newY)) {
+                    rightBottom!!.set(newX, newY)
+                }
             }
             DRAG -> {
-                movement = x - previous!!.x
-                val movementY: Int = y - previous!!.y
-                if (isInImageRange(PointF((leftTop!!.x + movement).toFloat(), (leftTop!!.y + movementY).toFloat())) && isInImageRange(PointF((rightBottom!!.x + movement).toFloat(), (rightBottom!!.y + movementY).toFloat()))) {
-                    leftTop!![leftTop!!.x + movement] = leftTop!!.y + movementY
-                    rightBottom!!.set(rightBottom!!.x + movement, rightBottom!!.y + movementY)
+                val dx = x - previous!!.x
+                val dy = y - previous!!.y
+                if (isInImageRange(PointF((leftTop!!.x + dx).toFloat(), (leftTop!!.y + dy).toFloat())) &&
+                    isInImageRange(PointF((rightBottom!!.x + dx).toFloat(), (rightBottom!!.y + dy).toFloat()))) {
+                    leftTop!!.set(leftTop!!.x + dx, leftTop!!.y + dy)
+                    rightBottom!!.set(rightBottom!!.x + dx, rightBottom!!.y + dy)
                 }
             }
         }
+    }
+
+    private fun isInViewBounds(x: Int, y: Int): Boolean {
+        return x >= 0 && x <= width && y >= 0 && y <= height
     }
 
     private fun getAffectedSide(x: Float, y: Float): Int {
