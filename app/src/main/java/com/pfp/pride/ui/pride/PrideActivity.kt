@@ -57,6 +57,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
     private var imageZoom = 0.5f
     private var ringScale = 0.3f
     private var flagModeRing = true
+    private var hasCropResized = false
     private var resultBitmap: Bitmap? = null
     private var imageOffsetX = 0f
     private var imageOffsetY = 0f
@@ -95,8 +96,20 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             btnChangeImage.tap { pickImageLauncher.launch("image/*") }
 
             // Step 2 crop buttons
-            btnCropReset.tap { cropView.resetPoints() }
-            btnCropCenter.tap { cropView.centerPoints() }
+            btnCropReset.tap {
+                cropView.resetPoints()
+                hasCropResized = false
+                setStep2ButtonsEnabled(false)
+            }
+            btnCropCenter.tap {
+                cropView.centerPoints()
+                if (!hasCropResized) {
+                    setStep2ButtonsEnabled(false)
+                } else {
+                    binding.btnCropCenter.isEnabled = false
+                    binding.btnCropCenter.alpha = 0.4f
+                }
+            }
 
             // Step 3 custom flag
             btnAddCustomFlag.tap { openCreateCustomFlagDialog() }
@@ -247,8 +260,6 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         if (currentStep > 1) {
             currentStep--
             updateStep()
-        } else {
-            handleBackLeftToRight()
         }
     }
 
@@ -289,9 +300,24 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         steps.forEachIndexed { index, view ->
             view.visibility = if (index + 1 == currentStep) View.VISIBLE else View.GONE
         }
+        if (currentStep == 2) {
+            hasCropResized = false
+            setStep2ButtonsEnabled(false)
+            binding.cropView.onChanged = { isResize ->
+                if (isResize) hasCropResized = true
+                setStep2ButtonsEnabled(true)
+            }
+        }
         updateDots()
         updateStepLabel()
         updateBottomNav()
+    }
+
+    private fun setStep2ButtonsEnabled(enabled: Boolean) {
+        binding.btnCropReset.isEnabled = enabled
+        binding.btnCropCenter.isEnabled = enabled
+        binding.btnCropReset.alpha = if (enabled) 1f else 0.4f
+        binding.btnCropCenter.alpha = if (enabled) 1f else 0.4f
     }
 
     private fun updateDots() {

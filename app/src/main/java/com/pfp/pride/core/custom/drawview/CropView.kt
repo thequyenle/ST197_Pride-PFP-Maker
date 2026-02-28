@@ -41,6 +41,8 @@ class CropView : AppCompatImageView {
     private var imageScaledWidth = 0
     private var imageScaledHeight = 0
 
+    var onChanged: ((isResize: Boolean) -> Unit)? = null
+
     // Adding parent class constructors
     constructor(context: Context) : this(context, null) {
         initCropView()
@@ -85,6 +87,7 @@ class CropView : AppCompatImageView {
                     (maxOf(prevRect.bottom, rightBottom!!.y.toFloat()) + pad).toInt()
                 )
                 previous!!.set(event.x.toInt(), event.y.toInt())
+                onChanged?.invoke(activeSide != DRAG)
             }
             MotionEvent.ACTION_UP -> {
                 previous = Point()
