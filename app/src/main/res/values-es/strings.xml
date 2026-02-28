@@ -155,7 +155,7 @@
     <string name="pride_layout_background_desc">Mezclar la transparencia de la imagen original con la bandera</string>
     <string name="pride_design_subtitle">Selecciona el estilo visual para tus banderas Pride</string>
     <string name="pride_image_zoom">Zoom de imagen</string>
-    <string name="pride_ring_scale">Escala del anillo</string>
+    <string name="image_scale">Escala del anillo</string>
     <string name="pride_default_zoom">Zoom de imagen predeterminado</string>
     <string name="pride_default_ring">Escala de anillo predeterminada</string>
     <string name="pride_center_image">Centrar posición de imagen</string>

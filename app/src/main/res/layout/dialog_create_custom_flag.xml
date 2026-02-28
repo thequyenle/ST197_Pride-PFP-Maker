@@ -82,7 +82,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="10sp"
-                android:textColor="#222222"
+                android:textColor="#000000"
                 android:text="@string/pride_flag_name"
                 app:layout_constraintTop_toBottomOf="@id/tvColorCount"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -94,7 +94,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/bg_16_stroke_white"
-                android:fontFamily="@font/lobster14"
+                android:fontFamily="@font/roboto_regular"
                 android:textSize="10sp"
                 android:gravity="center"
                 android:textColor="#222222"
@@ -102,6 +102,7 @@
                 android:textColorHint="#BBBBBB"
                 android:paddingHorizontal="12dp"
                 android:inputType="text"
+                android:imeOptions="actionDone"
                 app:layout_constraintTop_toBottomOf="@id/flagName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -113,8 +114,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/roboto_regular"
-                android:textSize="14sp"
-                android:textColor="#222222"
+                android:textSize="12sp"
+                android:textColor="#000000"
                 android:text="@string/pride_colors"
                 app:layout_constraintTop_toBottomOf="@id/etFlagName"
                 app:layout_constraintStart_toStartOf="parent" />

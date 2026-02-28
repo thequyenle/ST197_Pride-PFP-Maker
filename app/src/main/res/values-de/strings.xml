@@ -155,7 +155,7 @@
     <string name="pride_layout_background_desc">Transparenz des Originalbildes mit der Flagge mischen</string>
     <string name="pride_design_subtitle">Wähle den visuellen Stil für deine Pride-Flaggen</string>
     <string name="pride_image_zoom">Bild-Zoom</string>
-    <string name="pride_ring_scale">Ring-Skalierung</string>
+    <string name="image_scale">Ring-Skalierung</string>
     <string name="pride_default_zoom">Standard-Bild-Zoom</string>
     <string name="pride_default_ring">Standard-Ring-Skalierung</string>
     <string name="pride_center_image">Bildposition zentrieren</string>

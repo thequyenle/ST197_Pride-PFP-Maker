@@ -1,5 +1,8 @@
 package com.pfp.pride.ui.pride.adapter
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
@@ -10,28 +13,40 @@ import com.pfp.pride.data.model.pride.PrideFlagModel
 import com.pfp.pride.databinding.ItemSelectedFlagChipBinding
 
 class SelectedFlagChipAdapter(
+    private val context: Context,
     private val onRemoveClick: (PrideFlagModel) -> Unit
 ) : BaseAdapter<PrideFlagModel, ItemSelectedFlagChipBinding>(
     ItemSelectedFlagChipBinding::inflate
 ) {
-    // Simple color list for the dot per flag
-    private val dotColors = listOf(
-        "#4CAF50", "#2196F3", "#FF5722", "#9C27B0",
-        "#FF9800", "#00BCD4", "#E91E63", "#607D8B"
-    )
+    private val colorCache = mutableMapOf<Int, Int>()
 
     override fun onBind(binding: ItemSelectedFlagChipBinding, item: PrideFlagModel, position: Int) {
         binding.apply {
             tvChipName.text = item.name
 
-            // Set dot color
-            val colorHex = dotColors.getOrElse(position) { "#888888" }
+            val color = colorCache.getOrPut(item.id) { getDominantColor(item) }
             val drawable = GradientDrawable()
             drawable.shape = GradientDrawable.OVAL
-            drawable.setColor(Color.parseColor(colorHex))
+            drawable.setColor(color)
             dotColor.background = drawable
 
             btnRemoveChip.tap { onRemoveClick(item) }
+        }
+    }
+
+    private fun getDominantColor(item: PrideFlagModel): Int {
+        if (!item.customColors.isNullOrEmpty()) return item.customColors[0]
+        return try {
+            val stream = context.assets.open(item.assetPath)
+            val bitmap = BitmapFactory.decodeStream(stream)
+            stream.close()
+            val scaled = Bitmap.createScaledBitmap(bitmap, 1, 1, true)
+            val color = scaled.getPixel(0, 0)
+            bitmap.recycle()
+            scaled.recycle()
+            color
+        } catch (e: Exception) {
+            Color.GRAY
         }
     }
 }

@@ -12,7 +12,9 @@ import com.pfp.pride.core.utils.key.SharePreferenceKey.FIRST_LANG_KEY
 import com.pfp.pride.core.utils.key.SharePreferenceKey.FIRST_PERMISSION_KEY
 import com.pfp.pride.core.utils.key.SharePreferenceKey.KEY_LANGUAGE
 import com.pfp.pride.core.utils.key.SharePreferenceKey.MUSIC_KEY
+import com.pfp.pride.core.utils.key.SharePreferenceKey.PRIDE_CUSTOM_FLAGS
 import com.pfp.pride.core.utils.key.SharePreferenceKey.RATE_KEY
+import com.pfp.pride.data.model.pride.CustomFlagModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -119,6 +121,17 @@ class SharePreferenceHelper(val context: Context) {
         val json = Gson().toJson(count)
         editor.putString(QUANTITY_UNZIPPED, json)
         editor.apply()
+    }
+
+    // Pride Custom Flags
+    fun getCustomFlags(): MutableList<CustomFlagModel> {
+        val json = preferences.getString(PRIDE_CUSTOM_FLAGS, "[]")
+        val type = object : TypeToken<MutableList<CustomFlagModel>>() {}.type
+        return Gson().fromJson(json, type) ?: mutableListOf()
+    }
+
+    fun setCustomFlags(flags: List<CustomFlagModel>) {
+        preferences.edit().putString(PRIDE_CUSTOM_FLAGS, Gson().toJson(flags)).apply()
     }
 
     // Music

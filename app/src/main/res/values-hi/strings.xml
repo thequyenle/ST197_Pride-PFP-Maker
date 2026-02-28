@@ -155,7 +155,7 @@
     <string name="pride_layout_background_desc">मूल छवि की पारदर्शिता को झंडे के साथ मिलाएं</string>
     <string name="pride_design_subtitle">अपने प्राइड झंडों के लिए दृश्य शैली चुनें</string>
     <string name="pride_image_zoom">छवि ज़ूम</string>
-    <string name="pride_ring_scale">रिंग स्केल</string>
+    <string name="image_scale">रिंग स्केल</string>
     <string name="pride_default_zoom">डिफ़ॉल्ट छवि ज़ूम</string>
     <string name="pride_default_ring">डिफ़ॉल्ट रिंग स्केल</string>
     <string name="pride_center_image">छवि की स्थिति केंद्रित करें</string>

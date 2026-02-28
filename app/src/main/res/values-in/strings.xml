@@ -155,7 +155,7 @@
     <string name="pride_layout_background_desc">Campurkan transparansi gambar asli dengan bendera</string>
     <string name="pride_design_subtitle">Pilih gaya visual untuk bendera Pride Anda</string>
     <string name="pride_image_zoom">Zoom Gambar</string>
-    <string name="pride_ring_scale">Skala Cincin</string>
+    <string name="image_scale">Skala Cincin</string>
     <string name="pride_default_zoom">Zoom Gambar Default</string>
     <string name="pride_default_ring">Skala Cincin Default</string>
     <string name="pride_center_image">Pusatkan Posisi Gambar</string>

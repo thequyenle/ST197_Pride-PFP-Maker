@@ -315,6 +315,9 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                     layerCustomizeAdapter.submitList(viewModel.itemNavList[viewModel.positionNavSelected])
                     colorLayerCustomizeAdapter.submitList(viewModel.colorItemNavList[viewModel.positionNavSelected])
                     checkStatusColor()
+                    // Apply flip state after imageViewList is populated (collector fires too early when list is still empty)
+                    val flipRotation = if (viewModel.isFlip.value) -180f else 0f
+                    viewModel.imageViewList.forEach { it.rotationY = flipRotation }
                     viewModel.setIsCreated(true)
                     dismissLoading()
                     delay(300)

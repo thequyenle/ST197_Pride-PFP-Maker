@@ -156,11 +156,11 @@
     <string name="pride_layout_background_desc">Blend transparency in the original image with the flag</string>
     <string name="pride_design_subtitle">Select the visual style for your Pride flags</string>
     <string name="pride_image_zoom">Image Zoom</string>
-    <string name="pride_ring_scale">Ring Scale</string>
+    <string name="image_scale">Image Scale</string>
     <string name="pride_default_zoom">Default Image Zoom</string>
     <string name="pride_default_ring">Default Ring Scale</string>
     <string name="pride_center_image">Center Image Position</string>
-    <string name="pride_flag_mode_ring">Flag Mode: Ring</string>
+    <string name="pride_flag_mode_ring">Flag Mode: Image</string>
     <string name="pride_previous"> Previous</string>
     <string name="pride_start_over">Start Over</string>
     <string name="pride_continue">Continue</string>
@@ -173,5 +173,6 @@
     <string name="pride_colors">Colors</string>
     <string name="pride_create">Create</string>
     <string name="pride_select_at_least_one">Please select at least one flag</string>
+    <string name="pride_max_colors_reached">Maximum 10 colors allowed</string>
     <string name="my_pride">My Pride</string>
 </resources>

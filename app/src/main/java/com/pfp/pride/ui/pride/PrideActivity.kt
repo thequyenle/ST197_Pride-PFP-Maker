@@ -84,6 +84,17 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
     override fun setViewBinding() = ActivityPrideBinding.inflate(LayoutInflater.from(this))
 
     override fun initView() {
+        val saved = sharePreference.getCustomFlags()
+        customFlags.addAll(saved)
+        saved.forEachIndexed { index, customFlag ->
+            customFlagItems.add(PrideFlagModel(
+                id = 100 + index + 1,
+                name = customFlag.name,
+                assetPath = "",
+                isSelected = false,
+                customColors = customFlag.colors.toList()
+            ))
+        }
         setupFlagAdapter()
         setupChipAdapter()
     }
@@ -189,7 +200,11 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
 
             // Step 6 buttons
             btnDownload.tap { downloadResult() }
-            btnCreateAnother.tap { resetToStep1() }
+            btnCreateAnother.tap {
+                finish()
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            }
             btnMyWork.tap {
                 startIntentRightToLeft(MyCreationActivity::class.java, IntentKey.TAB_KEY, ValueKey.PRIDE_OVERLAY_TYPE)
             }
@@ -208,6 +223,8 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             btnActionBarLeft.tap { handleBackLeftToRight() }
             tvCenter.text = getString(R.string.pride_pfp_overlay)
             tvCenter.visible()
+            btnActionBarRight.setImageResource(R.drawable.ic_home)
+            btnActionBarRight.tap { handleBackLeftToRight() }
         }
     }
 
@@ -232,6 +249,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
                 imageOffsetX = 0f
                 imageOffsetY = 0f
                 generatePreviewBitmap()
+                applyPreviewCorner()
             }
             if (currentStep == 5) {
                 resultBitmap = generateFinalBitmap()
@@ -283,6 +301,8 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         binding.seekRingScale.progress = 30
         binding.switchFlagMode.setImageResource(R.drawable.ic_sw_on)
         clearSelectedImage()
+        flagAdapter.setMaxReached(false)
+        customFlagAdapter.setMaxReached(false)
         flagAdapter.submitList(allFlags.toList())
         chipAdapter.submitList(emptyList())
         updateStep()
@@ -308,6 +328,8 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
                 setStep2ButtonsEnabled(true)
             }
         }
+        binding.actionBar.btnActionBarRight.visibility =
+            if (currentStep == 6) View.VISIBLE else View.GONE
         updateDots()
         updateStepLabel()
         updateBottomNav()
@@ -454,7 +476,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
     }
 
     private fun setupChipAdapter() {
-        chipAdapter = SelectedFlagChipAdapter { flag ->
+        chipAdapter = SelectedFlagChipAdapter(this) { flag ->
             cachedFlagBitmap = null
             flag.isSelected = false
             selectedFlags.remove(flag)
@@ -480,6 +502,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         dialog.onCreateEvent = { customFlag ->
             dialog.dismiss()
             customFlags.add(customFlag)
+            sharePreference.setCustomFlags(customFlags)
             val newFlag = PrideFlagModel(
                 id = 100 + customFlags.size,
                 name = customFlag.name,
@@ -514,6 +537,24 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
 
     private fun generatePreviewBitmap() {
         updatePreview()
+    }
+
+    private fun applyPreviewCorner() {
+        val needRound = selectedLayout == LayoutStyle.BACKGROUND || selectedLayout == LayoutStyle.SQUARE
+        val radius = 14f * resources.displayMetrics.density
+        binding.imgPreview.apply {
+            if (needRound) {
+                outlineProvider = object : android.view.ViewOutlineProvider() {
+                    override fun getOutline(view: View, outline: android.graphics.Outline) {
+                        outline.setRoundRect(0, 0, view.width, view.height, radius)
+                    }
+                }
+                clipToOutline = true
+            } else {
+                clipToOutline = false
+                outlineProvider = android.view.ViewOutlineProvider.BACKGROUND
+            }
+        }
     }
 
     private fun updatePreview() {

@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="8sp"
-                android:textColor="#333333"
+                android:textColor="#000000"
                 android:text="Color 1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,10 +38,10 @@
             <!-- X button -->
             <ImageView
                 android:id="@+id/btnRemoveColor"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:src="@drawable/ic_close_color_pick"
-                app:tint="#999999"
+                app:tint="#000000"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

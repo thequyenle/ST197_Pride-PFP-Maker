@@ -6,6 +6,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pfp.pride.R
 import com.pfp.pride.core.base.BaseDialog
@@ -45,6 +48,15 @@ class CreateCustomFlagDialog(context: Context) :
 
     override fun initAction() {
         binding.apply {
+            etFlagName.setOnEditorActionListener { v, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                    v.clearFocus()
+                    true
+                } else false
+            }
+
             btnClose.tap { onCloseEvent.invoke() }
 
             btnAddColor.tap {
@@ -54,6 +66,8 @@ class CreateCustomFlagDialog(context: Context) :
                     updatePreview()
                     updateColorCount()
                     openColorPicker(colors.size - 1)
+                } else {
+                    Toast.makeText(context, R.string.pride_max_colors_reached, Toast.LENGTH_SHORT).show()
                 }
             }
 

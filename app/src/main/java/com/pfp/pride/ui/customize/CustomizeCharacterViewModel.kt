@@ -113,6 +113,10 @@ class CustomizeCharacterViewModel : ViewModel() {
         _isFlip.value = !_isFlip.value
     }
 
+    fun setIsFlipValue(value: Boolean) {
+        _isFlip.value = value
+    }
+
     fun setIsHideView() {
         _isHideView.value = !_isHideView.value
     }
@@ -658,7 +662,8 @@ class CustomizeCharacterViewModel : ViewModel() {
             isSelectedItemList = ArrayList(isSelectedItemList),
             keySelectedItemList = ArrayList(keySelectedItemList),
             isShowColorList = ArrayList(isShowColorList),
-            pathSelectedList = ArrayList(pathSelectedList)
+            pathSelectedList = ArrayList(pathSelectedList),
+            isFlip = _isFlip.value
         )
     }
 
@@ -670,6 +675,7 @@ class CustomizeCharacterViewModel : ViewModel() {
         updateKeySelectedItemList(suggestionModel.keySelectedItemList)
         updateIsShowColorList(suggestionModel.isShowColorList)
         updatePathSelectedList(suggestionModel.pathSelectedList)
+        setIsFlipValue(suggestionModel.isFlip)
     }
 
     suspend fun updateEditCharacter(context: Context, pathInternal: String) {
@@ -686,6 +692,7 @@ class CustomizeCharacterViewModel : ViewModel() {
                 isShowColorList = ArrayList(this@CustomizeCharacterViewModel.isShowColorList)
                 pathSelectedList = ArrayList(this@CustomizeCharacterViewModel.pathSelectedList)
                 pathInternalEdit = pathInternal
+                isFlip = this@CustomizeCharacterViewModel.isFlip.value
             }
             MediaHelper.writeListToFile(context, ValueKey.EDIT_FILE_INTERNAL, editList)
 
@@ -706,6 +713,7 @@ class CustomizeCharacterViewModel : ViewModel() {
             isShowColorList = this@CustomizeCharacterViewModel.isShowColorList,
             pathSelectedList = this@CustomizeCharacterViewModel.pathSelectedList,
             pathInternalEdit = pathInternal,
+            isFlip = isFlip.value,
         )
         editList.add(0, newEditModel)
         MediaHelper.writeListToFile(context, ValueKey.EDIT_FILE_INTERNAL, editList)

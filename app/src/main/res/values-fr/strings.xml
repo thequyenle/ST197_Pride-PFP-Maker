@@ -155,7 +155,7 @@
     <string name="pride_layout_background_desc">Mélanger la transparence de l\'image originale avec le drapeau</string>
     <string name="pride_design_subtitle">Sélectionnez le style visuel pour vos drapeaux Pride</string>
     <string name="pride_image_zoom">Zoom de l\'image</string>
-    <string name="pride_ring_scale">Échelle de l\'anneau</string>
+    <string name="image_scale">Échelle de l\'anneau</string>
     <string name="pride_default_zoom">Zoom d\'image par défaut</string>
     <string name="pride_default_ring">Échelle d\'anneau par défaut</string>
     <string name="pride_center_image">Centrer la position de l\'image</string>
