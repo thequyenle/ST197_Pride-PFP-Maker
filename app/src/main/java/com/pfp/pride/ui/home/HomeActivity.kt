@@ -112,7 +112,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         binding.apply {
             tv1.text = strings(R.string.pride_pfp_overlay)
             tv2.text = strings(R.string.pride_maker)
-            //tvTrending.text = strings(R.string.my_work)
+            tvTrending.text = strings(R.string.trending_tv)
+            tvRandomAll.text = strings(R.string.pfp_random)
+            tvMyAlbum.text = strings(R.string.my_work)
         }
     }
 

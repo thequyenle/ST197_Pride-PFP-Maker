@@ -172,4 +172,5 @@
     <string name="pride_colors">रंग</string>
     <string name="pride_create">बनाएं</string>
     <string name="pride_select_at_least_one">कृपया कम से कम एक झंडा चुनें</string>
+    <string name="my_pride">My Pride</string>
 </resources>

@@ -155,7 +155,7 @@
 
             <!--            tv3-->
             <com.pfp.pride.core.custom.text.DoubleStrokeTextView
-                android:id="@+id/tvRandomOne"
+                android:id="@+id/tvRandomAll"
                 android:layout_width="116dp"
                 android:layout_height="35dp"
                 style="@style/single_marquee"
@@ -202,7 +202,7 @@
                 android:background="@drawable/bg_tv_trending"
                 app:layout_constraintStart_toStartOf="@id/btnTrending"
                 app:layout_constraintEnd_toEndOf="@id/btnTrending"
-                app:layout_constraintTop_toTopOf="@id/tvRandomOne"
+                app:layout_constraintTop_toTopOf="@id/tvRandomAll"
 
                 />
 

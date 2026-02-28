@@ -25,7 +25,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     private val dataViewModel: DataViewModel by viewModels()
     var interCallBack: InterCallback? = null
 
-    private val MIN_SPLASH_MS = 0L  // Reduced from 3000ms to 1500ms for faster startup
+    private val MIN_SPLASH_MS = 2000L  // Reduced from 3000ms to 1500ms for faster startup
     private var minTimePassed = false
     private var dataReady = false
     private var triggered = false

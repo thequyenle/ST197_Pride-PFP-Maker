@@ -172,4 +172,5 @@
     <string name="pride_colors">Colores</string>
     <string name="pride_create">Crear</string>
     <string name="pride_select_at_least_one">Por favor selecciona al menos una bandera</string>
+    <string name="my_pride">My Pride</string>
 </resources>

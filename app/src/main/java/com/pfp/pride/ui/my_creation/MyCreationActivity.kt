@@ -106,21 +106,21 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
                                 when (type) {
                                     ValueKey.AVATAR_TYPE -> {
                                         imvTabBackground.setImageResource(R.drawable.bg_pride_slt)
-                                        setupSelectedTab(tvSpace)
+                                        setupSelectedTab(tvMyPride)
                                         setupUnselectedTab(tvMyDesign)
                                         setupUnselectedTab(tvMyOverlay)
                                         showFragment(ValueKey.AVATAR_TYPE)
                                     }
                                     ValueKey.MY_DESIGN_TYPE -> {
                                         imvTabBackground.setImageResource(R.drawable.bg_design_slt)
-                                        setupUnselectedTab(tvSpace)
+                                        setupUnselectedTab(tvMyPride)
                                         setupSelectedTab(tvMyDesign)
                                         setupUnselectedTab(tvMyOverlay)
                                         showFragment(ValueKey.MY_DESIGN_TYPE)
                                     }
                                     ValueKey.PRIDE_OVERLAY_TYPE -> {
                                         imvTabBackground.setImageResource(R.drawable.bg_overlay_slt)
-                                        setupUnselectedTab(tvSpace)
+                                        setupUnselectedTab(tvMyPride)
                                         setupUnselectedTab(tvMyDesign)
                                         setupSelectedTab(tvMyOverlay)
                                         showFragment(ValueKey.PRIDE_OVERLAY_TYPE)
@@ -326,7 +326,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
 
     override fun initText() {
         binding.apply {
-            tvSpace.select()
+            tvMyPride.select()
             tvMyDesign.select()
             tvMyOverlay.select()
         }

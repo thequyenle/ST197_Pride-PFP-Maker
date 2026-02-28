@@ -85,13 +85,13 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tvSpace"
+                    android:id="@+id/tvMyPride"
                     style="@style/single_marquee"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/lobster14"
                     android:gravity="center"
-                    android:text="@string/my_pony"
+                    android:text="@string/my_pride"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 

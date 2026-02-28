@@ -110,7 +110,7 @@
                     android:id="@+id/uploadBox"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginHorizontal="78dp"
+                    android:layout_marginHorizontal="58dp"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -309,7 +309,7 @@
                     android:id="@+id/cropView"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginHorizontal="78dp"
+                    android:layout_marginHorizontal="68dp"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -599,7 +599,7 @@
             android:id="@+id/step5Layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:visibility="visible"
+            tools:visibility="gone"
             android:visibility="gone">
 
             <LinearLayout

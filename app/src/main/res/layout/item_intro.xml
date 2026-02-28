@@ -24,6 +24,7 @@
         android:gravity="center"
         app:outerStrokeColor="@color/app"
         app:outerStrokeWidth="4dp"
+        android:layout_marginBottom="0dp"
         tools:text="@string/title_22"
         android:textColor="@color/white"
         android:textSize="28sp"
