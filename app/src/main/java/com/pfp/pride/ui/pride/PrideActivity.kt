@@ -540,8 +540,13 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
     }
 
     private fun applyPreviewCorner() {
-        val needRound = selectedLayout == LayoutStyle.BACKGROUND || selectedLayout == LayoutStyle.SQUARE
-        val radius = 14f * resources.displayMetrics.density
+        val needRound = selectedLayout == LayoutStyle.CIRCLE
+                || selectedLayout == LayoutStyle.BACKGROUND
+                || selectedLayout == LayoutStyle.SQUARE
+        val radius = when (selectedLayout) {
+            LayoutStyle.CIRCLE -> 12f * resources.displayMetrics.density
+            else -> 14f * resources.displayMetrics.density
+        }
         binding.imgPreview.apply {
             if (needRound) {
                 outlineProvider = object : android.view.ViewOutlineProvider() {
@@ -584,8 +589,9 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
         return when (selectedLayout) {
             LayoutStyle.CIRCLE -> {
+                val cornerRadius = size * 0.06f
                 val path = Path()
-                path.addCircle(size / 2f, size / 2f, size / 2f, Path.Direction.CW)
+                path.addRoundRect(RectF(0f, 0f, size.toFloat(), size.toFloat()), cornerRadius, cornerRadius, Path.Direction.CW)
                 canvas.save()
                 canvas.clipPath(path)
                 canvas.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
@@ -634,7 +640,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
 
     private fun generateFinalBitmap(previewSize: Int = 800): Bitmap {
         val source = croppedBitmap ?: selectedImageBitmap
-            ?: Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888)
+        ?: Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888)
 
         val size = previewSize
         val flagBitmap = buildFlagBitmap(size, size)
@@ -709,34 +715,29 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         val canvas = Canvas(result)
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
-        // Draw full circle clipped flag as background
+        // Draw flag clipped to rounded square (12dp proportional)
+        val cornerRadius = size * 0.06f
         val path = Path()
-        path.addCircle(size / 2f, size / 2f, size / 2f, Path.Direction.CW)
+        path.addRoundRect(RectF(0f, 0f, size.toFloat(), size.toFloat()), cornerRadius, cornerRadius, Path.Direction.CW)
         canvas.save()
         canvas.clipPath(path)
         canvas.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
         canvas.restore()
 
         if (flagModeRing) {
-            // Draw user image in center circle
+            // Draw user image in center (keep same ring thickness formula for seekbar behavior)
             val ringThickness = size * (0.1f + ringScale * 0.3f)
-            val innerRadius = size / 2f - ringThickness
+            val innerSize = size - ringThickness * 2
             val cx = size / 2f
             val cy = size / 2f
 
-            val innerPath = Path()
-            innerPath.addCircle(cx, cy, innerRadius, Path.Direction.CW)
-            canvas.save()
-            canvas.clipPath(innerPath)
-
             val zoom = 0.5f + imageZoom * 0.8f
-            val scaledSize = (innerRadius * 2 * zoom).toInt().coerceAtLeast(1)
+            val scaledSize = (innerSize * zoom).toInt().coerceAtLeast(1)
             val scaledUser = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
             val scaleFactor = size / 400f
             val offsetX = cx - scaledSize / 2f + imageOffsetX * scaleFactor
             val offsetY = cy - scaledSize / 2f + imageOffsetY * scaleFactor
             canvas.drawBitmap(scaledUser, offsetX, offsetY, paint)
-            canvas.restore()
         }
 
         return result
