@@ -34,6 +34,7 @@ import com.pfp.pride.core.extensions.visible
 import com.pfp.pride.core.helper.UnitHelper
 import com.pfp.pride.core.utils.key.IntentKey
 import com.pfp.pride.core.utils.key.RequestKey
+import com.pfp.pride.core.utils.key.ValueKey
 import com.pfp.pride.core.utils.state.HandleState
 import com.pfp.pride.databinding.ActivitySuccessBinding
 import com.pfp.pride.ui.home.HomeActivity
@@ -96,7 +97,7 @@ class SuccessActivity : BaseActivity<ActivitySuccessBinding>() {
             // My Album button
             includeLayoutBottom.btnWhatsapp.tap(2590) {
                 showInterAll {
-                    startIntentRightToLeft(MyCreationActivity::class.java, true)
+                    startIntentRightToLeft(MyCreationActivity::class.java, IntentKey.TAB_KEY, ValueKey.MY_DESIGN_TYPE)
                 }
             }
 

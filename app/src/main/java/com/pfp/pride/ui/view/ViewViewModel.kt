@@ -29,7 +29,7 @@ class ViewViewModel : ViewModel() {
     }
 
     fun deleteFile(context: Context, path: String): Flow<HandleState> = flow {
-        if (statusFrom == ValueKey.MY_DESIGN_TYPE) {
+        if (statusFrom == ValueKey.MY_DESIGN_TYPE || statusFrom == ValueKey.PRIDE_OVERLAY_TYPE) {
             emitAll(MediaHelper.deleteFileByPath(arrayListOf(path)))
         } else {
             emit(HandleState.LOADING)

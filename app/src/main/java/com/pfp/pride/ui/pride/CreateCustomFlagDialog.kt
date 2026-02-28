@@ -6,6 +6,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -44,6 +46,20 @@ class CreateCustomFlagDialog(context: Context) :
         colorAdapter.submitList(colors.toList())
         updatePreview()
         updateColorCount()
+
+        binding.etFlagName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) {
+                    binding.etFlagName.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0, 0, R.drawable.ic_edit_2, 0
+                    )
+                } else {
+                    binding.etFlagName.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                }
+            }
+        })
     }
 
     override fun initAction() {
@@ -61,11 +77,16 @@ class CreateCustomFlagDialog(context: Context) :
 
             btnAddColor.tap {
                 if (colors.size < 10) {
-                    colors.add(Color.WHITE)
-                    colorAdapter.submitList(colors.toList())
-                    updatePreview()
-                    updateColorCount()
-                    openColorPicker(colors.size - 1)
+                    val dialog = ChooseColorDialog(context)
+                    dialog.show()
+                    dialog.onCloseEvent = { dialog.dismiss() }
+                    dialog.onDoneEvent = { color ->
+                        dialog.dismiss()
+                        colors.add(color)
+                        colorAdapter.submitList(colors.toList())
+                        updatePreview()
+                        updateColorCount()
+                    }
                 } else {
                     Toast.makeText(context, R.string.pride_max_colors_reached, Toast.LENGTH_SHORT).show()
                 }

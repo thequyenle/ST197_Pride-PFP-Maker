@@ -44,6 +44,7 @@ import com.pfp.pride.ui.my_creation.MyCreationActivity
 import com.pfp.pride.ui.my_creation.view_model.MyAvatarViewModel
 import com.pfp.pride.ui.permission.PermissionViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -247,6 +248,7 @@ class ViewActivity : BaseActivity<ActivityViewBinding>() {
             myAvatarViewModel.editItem(this@ViewActivity, pathInternal, dataViewModel.allData.value)
 
             withContext(Dispatchers.Main) {
+                delay(300)
                 dismissLoading()
 
                 myAvatarViewModel.checkDataInternet(this@ViewActivity) {

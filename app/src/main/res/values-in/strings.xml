@@ -3,15 +3,15 @@
 
     <string name="app_name" translatable="false">Pony OC: Pony Avatar Maker</string>
 
-    <string name="go_to_setting_message">Aplikasi membutuhkan izin ini</string>
+    <string name="go_to_setting_message">Aplikasi memerlukan izin ini</string>
     <string name="settings">Pengaturan</string>
-    <string name="this_action_can_contain_ads">Tindakan ini mungkin berisi iklan</string>
+    <string name="this_action_can_contain_ads">Tindakan ini dapat berisi iklan</string>
     <string name="not_select_lang">Silakan pilih bahasa</string>
     <string name="next">Berikutnya</string>
     <string name="language">Bahasa</string>
 
     <string name="title_1">Buat Pride Sempurnamu</string>
-    <string name="title_2">Keberagaman Karakter</string>
+    <string name="title_2">Keragaman Karakter</string>
     <string name="title_3">Berbagai Item</string>
 
     <string name="permission">Izin</string>
@@ -25,29 +25,29 @@
     <string name="to_access">untuk mengakses foto di perangkat Anda</string>
     <string name="to_access_13">untuk mengakses notifikasi di perangkat Anda</string>
 
-    <string name="rate_us">Beri kami penilaian</string>
+    <string name="rate_us">Beri nilai kami</string>
     <string name="share_app">Bagikan aplikasi</string>
-    <string name="privacy_policy"><![CDATA[Privasi & Kebijakan]]></string>
+    <string name="privacy_policy"><![CDATA[Privasi & kebijakan]]></string>
 
     <string name="zero_star_title">Apakah Anda menyukai aplikasinya?</string>
-    <string name="zero_star">Beritahu kami pengalaman Anda</string>
+    <string name="zero_star">Beri tahu kami pengalaman Anda</string>
 
     <string name="one_star_title">Oh, tidak!</string>
-    <string name="one_star">Silakan berikan kami masukan</string>
+    <string name="one_star">Tolong beri kami masukan</string>
 
     <string name="two_star_title">Oh, tidak!</string>
-    <string name="two_star">Silakan berikan kami masukan</string>
+    <string name="two_star">Tolong beri kami masukan</string>
 
     <string name="three_star_title">Oh, tidak!</string>
-    <string name="three_star">Silakan berikan kami masukan</string>
+    <string name="three_star">Tolong beri kami masukan</string>
 
-    <string name="four_star_title">Kami juga menyayangi Anda!</string>
+    <string name="four_star_title">Kami juga menyayangimu!</string>
     <string name="four_star">Terima kasih atas masukan Anda</string>
 
-    <string name="five_star_title">Kami juga menyayangi Anda!</string>
+    <string name="five_star_title">Kami juga menyayangimu!</string>
     <string name="five_star">Terima kasih atas masukan Anda</string>
 
-    <string name="rate_us_0">Anda belum memberi penilaian!</string>
+    <string name="rate_us_0">Anda belum memberikan penilaian!</string>
     <string name="rate">Nilai</string>
     <string name="exit">Keluar</string>
     <string name="have_rated">Terima kasih telah menilai aplikasi kami</string>
@@ -60,7 +60,7 @@
     <string name="wait_a_minute">Tunggu sebentar</string>
     <string name="reset">Atur ulang</string>
     <string name="download_success">Unduhan berhasil ke album Pony OC: Pony Avatar Maker</string>
-    <string name="please_check_your_internet">Silakan periksa koneksi internet Anda</string>
+    <string name="please_check_your_internet">Silakan periksa internet Anda</string>
     <string name="please_select_an_image">Silakan pilih gambar</string>
     <string name="error">Kesalahan</string>
     <string name="an_error_occurred">Terjadi kesalahan, silakan coba lagi nanti.</string>
@@ -70,18 +70,18 @@
     <string name="downloading">Mengunduh...</string>
     <string name="successfully">Berhasil</string>
     <string name="download_failed_please_try_again_later">Unduhan gagal, silakan coba lagi nanti!</string>
-    <string name="save_failed_please_try_again">Gagal menyimpan, silakan coba lagi!</string>
-    <string name="delete_failed_please_try_again">Gagal menghapus, silakan coba lagi!</string>
+    <string name="save_failed_please_try_again">Penyimpanan gagal, silakan coba lagi!</string>
+    <string name="delete_failed_please_try_again">Penghapusan gagal, silakan coba lagi!</string>
     <string name="my_creation">Kreasi Saya</string>
     <string name="delete_your_customize">Hapus kustomisasi Anda</string>
     <string name="are_you_sure_you_want_to_delete_the_image">Apakah Anda yakin ingin menghapus gambar?</string>
     <string name="haven_t_saved_it_yet_do_you_want_to_exit">Belum disimpan, apakah Anda yakin ingin keluar?</string>
     <string name="change_your_whole_design_are_you_sure">Apakah Anda ingin mengatur ulang?</string>
-    <string name="character_maker">Pembuat Pixel</string>
-    <string name="no_item_here">Tidak Ada Item di Sini</string>
+    <string name="character_maker">Pixel Maker</string>
+    <string name="no_item_here">Tidak Ada Item Di Sini</string>
     <string name="quick_maker">Pembuat Cepat</string>
     <string name="my_character">Pixel Saya</string>
-    <string name="category">Pembuat Pixel</string>
+    <string name="category">Pixel Maker</string>
 
     <string name="hello_blank_fragment">Halo fragmen kosong</string>
     <string name="no_item_space">Tidak ada riwayat saat ini</string>
@@ -93,17 +93,17 @@
     <string name="no_app_found_to_handle_this_action">Tidak ada aplikasi yang ditemukan untuk menangani tindakan ini</string>
     <string name="invalid_action_msg">Aplikasi tidak terinstal</string>
     <string name="invalid_action">Kesalahan</string>
-    <string name="limit_3_items">Setidaknya 3 item diperlukan untuk membuat stiker</string>
-    <string name="limit_30_items">Maksimal hanya 30 item yang dapat ditambahkan</string>
+    <string name="limit_3_items">Minimal 3 item diperlukan untuk membuat stiker</string>
+    <string name="limit_30_items">Hanya maksimal 30 item yang dapat ditambahkan</string>
     <string name="create_package_name">Buat Nama Paket</string>
     <string name="enter_your_package_name">Masukkan nama paket Anda</string>
     <string name="please_enter_your_package_name">Silakan masukkan nama paket Anda!</string>
     <string name="background">Latar Belakang</string>
     <string name="image">Gambar</string>
     <string name="color">Warna</string>
-    <string name="add_image">Tambah Gambar</string>
+    <string name="add_image">Tambahkan Gambar</string>
     <string name="sticker">Stiker</string>
-    <string name="speech_bubbles">Gelembung Bicara</string>
+    <string name="speech_bubbles">Balon Ucapan</string>
     <string name="text">Teks</string>
     <string name="type_your_content">Ketik konten Anda...</string>
     <string name="font">Font</string>
@@ -113,31 +113,29 @@
     <string name="input_text">Masukkan teks</string>
     <string name="hello_world">Ketik konten Anda...</string>
     <string name="no_item_desgin">Tidak ada riwayat saat ini</string>
-    <string name="my_character_in">Karya Saya</string>
-    <string name="quick_maker_in">Campuran cepat</string>
+    <string name="my_character_in">Pekerjaan Saya</string>
+    <string name="quick_maker_in">Mix cepat</string>
     <string name="exit_add">Keluar dari latar belakang Anda</string>
     <string name="exit_bg">Keluar dari latar belakang Anda</string>
     <string name="loading">Memuat</string>
     <string name="internet_required_for_more_characters">Internet diperlukan untuk lebih banyak karakter</string>
     <string name="music">Musik</string>
-    <string name="my_work">Karya Saya</string>
-    <string name="pride_maker">Pembuat Pride OC</string>
+    <string name="my_work">Pekerjaan Saya</string>
+    <string name="pride_maker">Pride OC Maker</string>
     <string name="trending">Kustom Trending</string>
-    <string name="my_pony">Pony Saya</string>
+    <string name="my_pony">Poni Saya</string>
     <string name="do_you_want_to_exit">Apakah Anda ingin keluar?</string>
-    <string name="title_11">Gaya Karakter Beragam</string>
-    <string name="title_22">Buat Avatar Sendiri\nSesuka Hati Anda</string>
     <string name="pfp_random">Pride PFP Acak</string>
     <string name="trending_tv">Pride PFP Trending</string>
-    <string name="pride_pfp_overlay">Overlay Pride PFP</string>
-    <string name="generate">Buat Secara Acak</string>
+    <string name="pride_pfp_overlay">Overlay Saya</string>
+    <string name="generate">Hasilkan Secara Acak</string>
 
     <string name="pride_choose_image">Pilih Gambar</string>
     <string name="pride_crop_image">Potong Gambar</string>
     <string name="pride_choose_flags">Pilih Bendera Pride Anda</string>
     <string name="pride_choose_layout">Pilih Gaya Tata Letak</string>
     <string name="pride_choose_design">Pilih Gaya Desain</string>
-    <string name="pride_result_title">Foto Profil Pride Anda Siap</string>
+    <string name="pride_result_title">Foto Profil Pride Anda Sudah Siap</string>
     <string name="pride_result_subtitle">Tunjukkan Pride Anda dengan foto profil yang dipersonalisasi</string>
     <string name="pride_choose_image_hint">Pilih gambar untuk diedit</string>
     <string name="pride_no_image_uploaded">Tidak ada gambar yang diunggah</string>
@@ -146,25 +144,25 @@
     <string name="pride_selected_flags">Bendera yang Dipilih</string>
     <string name="pride_my_custom">Bendera Kustom Saya</string>
     <string name="pride_flags_section">Bendera Pride</string>
-    <string name="pride_layout_subtitle">Pilih bagaimana bendera ditempatkan pada gambar Anda</string>
+    <string name="pride_layout_subtitle">Pilih cara bendera diposisikan pada gambar Anda</string>
     <string name="pride_layout_circle">Lingkaran</string>
-    <string name="pride_layout_circle_desc">Terapkan bendera sebagai batas melingkar di sekitar gambar</string>
-    <string name="pride_layout_square">Persegi</string>
-    <string name="pride_layout_square_desc">Terapkan bendera sebagai batas persegi di sekitar gambar</string>
+    <string name="pride_layout_circle_desc">Terapkan bendera sebagai batas lingkaran di sekitar gambar</string>
+    <string name="pride_layout_square">Kotak</string>
+    <string name="pride_layout_square_desc">Terapkan bendera sebagai batas kotak di sekitar gambar</string>
     <string name="pride_layout_background">Latar Belakang</string>
-    <string name="pride_layout_background_desc">Campurkan transparansi gambar asli dengan bendera</string>
+    <string name="pride_layout_background_desc">Padukan transparansi gambar asli dengan bendera</string>
     <string name="pride_design_subtitle">Pilih gaya visual untuk bendera Pride Anda</string>
     <string name="pride_image_zoom">Zoom Gambar</string>
-    <string name="image_scale">Skala Cincin</string>
+    <string name="image_scale">Skala Gambar</string>
     <string name="pride_default_zoom">Zoom Gambar Default</string>
     <string name="pride_default_ring">Skala Cincin Default</string>
     <string name="pride_center_image">Pusatkan Posisi Gambar</string>
-    <string name="pride_flag_mode_ring">Mode Bendera: Cincin</string>
+    <string name="pride_flag_mode_ring">Mode Bendera: Gambar</string>
     <string name="pride_previous"> Sebelumnya</string>
     <string name="pride_start_over">Mulai Ulang</string>
     <string name="pride_continue">Lanjutkan</string>
-    <string name="pride_create_another">Buat yang Lain</string>
-    <string name="pride_my_work">Karya Saya</string>
+    <string name="pride_create_another">Buat Lagi</string>
+    <string name="pride_my_work">Pekerjaan Saya</string>
     <string name="pride_center">Tengah</string>
     <string name="pride_create_custom_flag">Buat Bendera Kustom</string>
     <string name="pride_flag_name">Nama Bendera</string>
@@ -172,5 +170,6 @@
     <string name="pride_colors">Warna</string>
     <string name="pride_create">Buat</string>
     <string name="pride_select_at_least_one">Silakan pilih setidaknya satu bendera</string>
-    <string name="my_pride">My Pride</string>
+    <string name="pride_max_colors_reached">Maksimal 10 warna yang diizinkan</string>
+    <string name="my_pride">Pride Saya</string>
 </resources>

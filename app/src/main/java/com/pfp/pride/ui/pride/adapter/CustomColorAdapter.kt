@@ -17,8 +17,20 @@ class CustomColorAdapter(
 ) {
     override fun submitList(list: List<Int>) {
         val oldSize = items.size
-        super.submitList(list)
-        if ((oldSize == 1) != (items.size == 1)) notifyItemChanged(0)
+        val newSize = list.size
+        items.clear()
+        items.addAll(list)
+        when {
+            newSize < oldSize -> {
+                notifyItemRangeRemoved(newSize, oldSize - newSize)
+                if (newSize > 0) notifyItemRangeChanged(0, newSize)
+            }
+            newSize > oldSize -> {
+                if (oldSize > 0) notifyItemRangeChanged(0, oldSize)
+                notifyItemRangeInserted(oldSize, newSize - oldSize)
+            }
+            else -> notifyItemRangeChanged(0, newSize)
+        }
     }
 
     override fun onBind(binding: ItemCustomColorBinding, item: Int, position: Int) {

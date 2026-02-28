@@ -501,7 +501,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         dialog.onCloseEvent = { dialog.dismiss() }
         dialog.onCreateEvent = { customFlag ->
             dialog.dismiss()
-            customFlags.add(customFlag)
+            customFlags.add(0, customFlag)
             sharePreference.setCustomFlags(customFlags)
             val newFlag = PrideFlagModel(
                 id = 100 + customFlags.size,
