@@ -82,6 +82,8 @@
         android:id="@+id/stepContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/layoutHeader"
         app:layout_constraintBottom_toTopOf="@id/layoutBottomNav"
         app:layout_constraintStart_toStartOf="parent"
@@ -329,6 +331,8 @@
             android:id="@+id/step3Layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             tools:visibility="gone"
             android:visibility="gone">
 
@@ -337,7 +341,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="12dp"
-                android:paddingBottom="16dp">
+                android:paddingBottom="16dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -414,7 +420,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:nestedScrollingEnabled="false" />
+                    android:nestedScrollingEnabled="false"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:padding="4dp" />
 
                 <!-- Pride's Flag section -->
                 <TextView
@@ -430,7 +439,10 @@
                     android:id="@+id/rvFlags"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false" />
+                    android:nestedScrollingEnabled="false"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:padding="4dp" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
