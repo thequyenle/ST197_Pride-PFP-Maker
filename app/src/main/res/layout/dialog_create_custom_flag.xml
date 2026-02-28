@@ -100,7 +100,6 @@
                 android:textColor="#222222"
                 android:hint="@string/pride_enter_name"
                 android:textColorHint="#BBBBBB"
-                android:drawableEnd="@drawable/ic_edit_2"
                 android:drawablePadding="4dp"
                 android:paddingHorizontal="12dp"
                 android:inputType="text"

@@ -66,6 +66,9 @@ class CreateCustomFlagDialog(context: Context) :
         binding.apply {
             etFlagName.setOnEditorActionListener { v, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (v.text.toString().trim().isEmpty()) {
+                        Toast.makeText(context, R.string.pride_enter_name, Toast.LENGTH_SHORT).show()
+                    }
                     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(v.windowToken, 0)
                     v.clearFocus()
@@ -95,7 +98,7 @@ class CreateCustomFlagDialog(context: Context) :
             btnCreate.tap {
                 val name = etFlagName.text.toString().trim()
                 if (name.isEmpty()) {
-                    etFlagName.error = context.getString(R.string.pride_enter_name)
+                    Toast.makeText(context, R.string.pride_enter_name, Toast.LENGTH_SHORT).show()
                     return@tap
                 }
                 onCreateEvent.invoke(CustomFlagModel(name, colors.toMutableList()))
