@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pfp.pride.R
 import com.pfp.pride.core.base.BaseActivity
 import com.pfp.pride.core.extensions.gone
+import com.pfp.pride.core.extensions.select
 import com.pfp.pride.core.extensions.tap
 import com.pfp.pride.core.extensions.visible
 import com.pfp.pride.core.helper.MediaHelper
@@ -223,6 +224,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             btnActionBarLeft.tap { handleBackLeftToRight() }
             tvCenter.text = getString(R.string.pride_pfp_overlay)
             tvCenter.visible()
+            tvCenter.select()
             btnActionBarRight.setImageResource(R.drawable.ic_home)
             btnActionBarRight.tap { handleBackLeftToRight() }
         }

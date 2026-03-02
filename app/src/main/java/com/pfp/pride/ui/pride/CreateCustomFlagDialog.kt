@@ -53,7 +53,7 @@ class CreateCustomFlagDialog(context: Context) :
             override fun afterTextChanged(s: Editable?) {
                 if (s.isNullOrEmpty()) {
                     binding.etFlagName.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        0, 0, R.drawable.ic_edit_2, 0
+                        0, 0, 0, 0
                     )
                 } else {
                     binding.etFlagName.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
