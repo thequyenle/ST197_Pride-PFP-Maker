@@ -247,7 +247,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
-            tools:visibility="gone"
+            tools:visibility="visible"
             android:visibility="gone">
 
             <!-- Reset / Center buttons -->
@@ -613,7 +613,7 @@
             android:id="@+id/step5Layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:visibility="visible"
+            tools:visibility="gone"
             android:visibility="gone">
 
             <LinearLayout

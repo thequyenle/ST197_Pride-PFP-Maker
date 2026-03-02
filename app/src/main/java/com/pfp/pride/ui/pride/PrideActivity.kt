@@ -287,6 +287,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         currentStep = 1
         selectedImageBitmap = null
         croppedBitmap = null
+        hasCropResized = false
         selectedFlags.clear()
         allFlags.forEach { it.isSelected = false }
         customFlags.clear()
@@ -323,10 +324,9 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             view.visibility = if (index + 1 == currentStep) View.VISIBLE else View.GONE
         }
         if (currentStep == 2) {
-            hasCropResized = false
-            setStep2ButtonsEnabled(false)
+            setStep2ButtonsEnabled(hasCropResized)
             binding.cropView.onChanged = { isResize ->
-                if (isResize) hasCropResized = true
+                hasCropResized = true
                 setStep2ButtonsEnabled(true)
             }
         }
@@ -404,6 +404,7 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             val inputStream = contentResolver.openInputStream(uri)
             selectedImageBitmap = BitmapFactory.decodeStream(inputStream)
             inputStream?.close()
+            hasCropResized = false
             binding.imgSelectedPreview.setImageBitmap(selectedImageBitmap)
             binding.emptyUploadState.gone()
             binding.loadedImageState.visible()

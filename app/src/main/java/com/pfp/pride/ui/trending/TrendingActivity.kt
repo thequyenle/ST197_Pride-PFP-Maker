@@ -227,7 +227,10 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
     }
 
     private fun renderSuggestion(model: SuggestionModel, onComplete: (() -> Unit)? = null) {
+        android.util.Log.d("TrendingDebug", "renderSuggestion() called | pathInternalRandom='${model.pathInternalRandom}' | pathSelectedList.size=${model.pathSelectedList.size} | avatarPath='${model.avatarPath}'")
+
         if (model.pathInternalRandom.isNotEmpty()) {
+            android.util.Log.d("TrendingDebug", "  → pathInternalRandom không rỗng, load trực tiếp")
             Glide.with(this)
                 .load(model.pathInternalRandom)
                 .listener(glideListener(onComplete))
@@ -238,7 +241,11 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val paths = model.pathSelectedList.filter { it.isNotEmpty() }
+                android.util.Log.d("TrendingDebug", "  → pathInternalRandom rỗng, tính từ pathSelectedList")
+                android.util.Log.d("TrendingDebug", "     pathSelectedList raw (${model.pathSelectedList.size} item): ${model.pathSelectedList}")
+                android.util.Log.d("TrendingDebug", "     paths sau filter notEmpty (${paths.size} item): $paths")
                 if (paths.isEmpty()) {
+                    android.util.Log.w("TrendingDebug", "  !! paths.isEmpty() → onComplete gọi không có ảnh nào, GIF sẽ còn quay!")
                     withContext(Dispatchers.Main) { onComplete?.invoke() }
                     return@launch
                 }
@@ -269,19 +276,25 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
                     ValueKey.RANDOM_TEMP_ALBUM,
                     combinedBitmap
                 ).collect { state ->
+                    android.util.Log.d("TrendingDebug", "  → saveBitmapToInternalStorage state: $state")
                     if (state is SaveState.Success) {
                         model.pathInternalRandom = state.path
+                        android.util.Log.d("TrendingDebug", "     Save thành công: path='${state.path}'")
                     }
                 }
 
+                android.util.Log.d("TrendingDebug", "  → Sau save: pathInternalRandom='${model.pathInternalRandom}'")
                 withContext(Dispatchers.Main) {
+                    if (model.pathInternalRandom.isEmpty()) {
+                        android.util.Log.w("TrendingDebug", "  !! pathInternalRandom vẫn rỗng sau save → Glide.load('') sẽ fail, GIF còn quay!")
+                    }
                     Glide.with(this@TrendingActivity)
                         .load(model.pathInternalRandom)
                         .listener(glideListener(onComplete))
                         .into(binding.imvImage)
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                android.util.Log.e("TrendingDebug", "  !! Exception trong renderSuggestion: ${e::class.simpleName}: ${e.message}", e)
                 withContext(Dispatchers.Main) { onComplete?.invoke() }
             }
         }
@@ -290,10 +303,12 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
     private fun glideListener(onComplete: (() -> Unit)?): RequestListener<android.graphics.drawable.Drawable> {
         return object : RequestListener<android.graphics.drawable.Drawable> {
             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<android.graphics.drawable.Drawable>, isFirstResource: Boolean): Boolean {
+                android.util.Log.e("TrendingDebug", "  !! Glide.onLoadFailed: model='$model' | cause=${e?.causes?.joinToString { it.message ?: it::class.simpleName ?: "?" }}")
                 onComplete?.invoke()
                 return false
             }
             override fun onResourceReady(resource: android.graphics.drawable.Drawable, model: Any, target: Target<android.graphics.drawable.Drawable>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                android.util.Log.d("TrendingDebug", "  ✓ Glide.onResourceReady: model='$model' | source=$dataSource")
                 onComplete?.invoke()
                 return false
             }
