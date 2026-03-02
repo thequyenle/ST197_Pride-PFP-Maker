@@ -42,7 +42,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         if (!isTaskRoot &&
             intent.hasCategory(Intent.CATEGORY_LAUNCHER) &&
             intent.action != null &&
-            intent.action.equals(Intent.ACTION_MAIN)) {
+            intent.action == Intent.ACTION_MAIN) {
             finish(); return
         }
 
