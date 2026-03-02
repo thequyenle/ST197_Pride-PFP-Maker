@@ -330,13 +330,6 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
                 setStep2ButtonsEnabled(true)
             }
         }
-        if (currentStep == 5) {
-            val isBackground = selectedLayout == LayoutStyle.BACKGROUND
-            val ringVis = if (isBackground) View.GONE else View.VISIBLE
-            binding.tvRingScaleLabel.visibility = ringVis
-            binding.seekRingScale.visibility = ringVis
-            binding.btnDefaultRing.visibility = ringVis
-        }
         binding.actionBar.btnActionBarRight.visibility =
             if (currentStep == 6) View.VISIBLE else View.GONE
         updateDots()
@@ -575,16 +568,23 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         previewJob?.cancel()
         previewJob = lifecycleScope.launch {
             val source = croppedBitmap ?: selectedImageBitmap ?: return@launch
-            val (baseBmp, userBmp, clipR) = withContext(Dispatchers.Default) {
+            var baseBmp: Bitmap? = null
+            var userBmp: Bitmap? = null
+            var clipR = 0f
+            var overlayBmp: Bitmap? = null
+            withContext(Dispatchers.Default) {
                 val flagBmp = buildFlagBitmap(400, 400)
-                val base = buildBaseLayer(flagBmp, 400)
+                baseBmp = buildBaseLayer(flagBmp, 400)
                 val user = if (flagModeRing) buildUserLayer(source, 400) else null
-                Triple(base, user?.first, user?.second ?: 0f)
+                userBmp = user?.first
+                clipR = user?.second ?: 0f
+                overlayBmp = buildRingOverlay(flagBmp, 400)
             }
             if (!isActive) return@launch
             binding.imgPreview.baseBitmap = baseBmp
             binding.imgPreview.userBitmap = userBmp
             binding.imgPreview.clipRadius = clipR
+            binding.imgPreview.overlayBitmap = overlayBmp
             val vw = binding.imgPreview.width.toFloat().takeIf { it > 0f } ?: 400f
             binding.imgPreview.userOffsetX = imageOffsetX * (vw / 400f)
             binding.imgPreview.userOffsetY = imageOffsetY * (vw / 400f)
@@ -614,6 +614,34 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         }
     }
 
+    private fun buildRingOverlay(flagBitmap: Bitmap, size: Int): Bitmap? {
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        val clearPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        }
+        return when (selectedLayout) {
+            LayoutStyle.SQUARE -> {
+                val overlay = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+                val c = Canvas(overlay)
+                c.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
+                val thickness = size * (0.05f + ringScale * 0.2f)
+                c.drawRect(thickness, thickness, size - thickness, size - thickness, clearPaint)
+                overlay
+            }
+            LayoutStyle.BACKGROUND -> {
+                val overlay = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+                val c = Canvas(overlay)
+                c.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
+                val padding = size * (0.05f + ringScale * 0.2f)
+                val innerSize = size - padding * 2
+                val holeRadius = innerSize * 0.08f
+                c.drawRoundRect(RectF(padding, padding, size - padding, size - padding), holeRadius, holeRadius, clearPaint)
+                overlay
+            }
+            else -> null
+        }
+    }
+
     private fun buildUserLayer(source: Bitmap, size: Int): Pair<Bitmap, Float> {
         return when (selectedLayout) {
             LayoutStyle.CIRCLE -> {
@@ -629,7 +657,9 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
                 Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true) to 0f
             }
             LayoutStyle.BACKGROUND -> {
-                val scaledSize = (size * (0.3f + imageZoom * 0.7f)).toInt().coerceAtLeast(1)
+                val padding = size * (0.05f + ringScale * 0.2f)
+                val availableSize = size - padding * 2
+                val scaledSize = (availableSize * (0.3f + imageZoom * 0.7f)).toInt().coerceAtLeast(1)
                 val scaled = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
                 val rounded = Bitmap.createBitmap(scaledSize, scaledSize, Bitmap.Config.ARGB_8888)
                 val c = Canvas(rounded)
@@ -774,6 +804,10 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
             canvas.drawBitmap(scaledUser, offsetX, offsetY, paint)
         }
 
+        // Draw ring overlay on top (flag with center hole)
+        val ringOverlay = buildRingOverlay(flagBitmap, size)
+        if (ringOverlay != null) canvas.drawBitmap(ringOverlay, 0f, 0f, paint)
+
         return result
     }
 
@@ -786,8 +820,10 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         canvas.drawBitmap(flagBitmap, null, RectF(0f, 0f, size.toFloat(), size.toFloat()), paint)
 
         // Draw user image centered on top with rounded corners
+        val padding = size * (0.05f + ringScale * 0.2f)
+        val availableSize = size - padding * 2
         val zoom = 0.3f + imageZoom * 0.7f
-        val scaledSize = (size * zoom).toInt().coerceAtLeast(1)
+        val scaledSize = (availableSize * zoom).toInt().coerceAtLeast(1)
         val scaledUser = Bitmap.createScaledBitmap(source, scaledSize, scaledSize, true)
         val scaleFactor = size / 400f
         val offsetX = (size - scaledSize) / 2f + imageOffsetX * scaleFactor
@@ -805,6 +841,10 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
         canvas.clipPath(clipPath)
         canvas.drawBitmap(scaledUser, offsetX, offsetY, paint)
         canvas.restore()
+
+        // Draw ring overlay on top (flag with rounded center hole)
+        val ringOverlay = buildRingOverlay(flagBitmap, size)
+        if (ringOverlay != null) canvas.drawBitmap(ringOverlay, 0f, 0f, paint)
 
         return result
     }

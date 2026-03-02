@@ -19,6 +19,7 @@ class PreviewView @JvmOverloads constructor(
     var clipRadius: Float = 0f   // in bitmap-space pixels (previewSize=400)
     var userOffsetX: Float = 0f  // in view pixels
     var userOffsetY: Float = 0f  // in view pixels
+    var overlayBitmap: Bitmap? = null  // ring overlay drawn on top of user image
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val clipPath = Path()
@@ -47,6 +48,11 @@ class PreviewView @JvmOverloads constructor(
         }
         canvas.drawBitmap(user, null, RectF(left, top, left + userW, top + userH), paint)
         canvas.restore()
+
+        val overlay = overlayBitmap
+        if (overlay != null) {
+            canvas.drawBitmap(overlay, null, RectF(0f, 0f, w, h), paint)
+        }
     }
 
     fun resetOffset() {
