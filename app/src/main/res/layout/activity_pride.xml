@@ -613,7 +613,7 @@
             android:id="@+id/step5Layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:visibility="gone"
+            tools:visibility="visible"
             android:visibility="gone">
 
             <LinearLayout
@@ -668,6 +668,7 @@
 
                 <!-- Ring Scale -->
                 <TextView
+                    android:id="@+id/tvRingScaleLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lobster14"
@@ -788,7 +789,7 @@
             android:id="@+id/step6Layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:visibility="visible"
+            tools:visibility="gone"
             android:visibility="gone">
 
             <LinearLayout

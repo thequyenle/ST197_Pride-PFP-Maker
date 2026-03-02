@@ -156,7 +156,7 @@
     <string name="pride_image_zoom">Image Zoom</string>
     <string name="image_scale">Image Scale</string>
     <string name="pride_default_zoom">Default Image Zoom</string>
-    <string name="pride_default_ring">Default Ring Scale</string>
+    <string name="pride_default_ring">Default Image Scale</string>
     <string name="pride_center_image">Center Image Position</string>
     <string name="pride_flag_mode_ring">Flag Mode: Image</string>
     <string name="pride_previous"> Previous</string>

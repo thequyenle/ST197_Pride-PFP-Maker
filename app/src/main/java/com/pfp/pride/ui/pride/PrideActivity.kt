@@ -330,6 +330,13 @@ class PrideActivity : BaseActivity<ActivityPrideBinding>() {
                 setStep2ButtonsEnabled(true)
             }
         }
+        if (currentStep == 5) {
+            val isBackground = selectedLayout == LayoutStyle.BACKGROUND
+            val ringVis = if (isBackground) View.GONE else View.VISIBLE
+            binding.tvRingScaleLabel.visibility = ringVis
+            binding.seekRingScale.visibility = ringVis
+            binding.btnDefaultRing.visibility = ringVis
+        }
         binding.actionBar.btnActionBarRight.visibility =
             if (currentStep == 6) View.VISIBLE else View.GONE
         updateDots()
